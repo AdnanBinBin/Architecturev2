@@ -6,10 +6,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPINormal.DTO;
 
 namespace DAL.Repositories
 {
-    public class CardRepository: IRepository<Card>
+    public class CardRepository : IRepository<CardDTO> // Utilisation de CardDTO
     {
         private readonly PrintContext _context;
 
@@ -18,37 +19,114 @@ namespace DAL.Repositories
             _context = context;
         }
 
-        public void Add(Card entity)
+        public void Add(CardDTO entity)
         {
-            _context.Cards.Add(entity);
+            // Créez un nouvel objet Card à partir de CardDTO
+            var newCard = new Card
+            {
+                IdUser = entity.IdUser,
+                isEnabled = entity.IsEnabled
+                // Mappez les autres propriétés ici
+            };
+
+            // Ajoutez la nouvelle carte à la base de données
+            _context.Cards.Add(newCard);
             _context.SaveChanges();
         }
 
-        public Card GetById(int id)
+        public CardDTO GetById(int id)
         {
-            return _context.Cards.Find(id);
+           
+            // Recherchez la carte par son ID
+            var card = _context.Cards.Find(id);
+
+            if (card == null)
+            {
+                return null;
+            }
+
+            // Créez un DTO à partir de la carte trouvée
+            var cardDTO = new CardDTO(card.IdCard,card.IdUser, card.isEnabled);
+
+            return cardDTO;
         }
 
-        public IEnumerable<Card> GetAll()
+
+        public UserDTO GetUserByCardId(int id)
         {
-            return _context.Cards.ToList();
+            
+            // Recherchez la carte par son ID
+            var card = _context.Cards.Find(id);
+
+            if (card == null)
+            {
+                return null;
+            }
+
+            var user = _context.Users.Find(card.IdUser);
+
+            // Créez un DTO à partir de la carte trouvée
+            var userDTO = new UserDTO(user.IdUser, user.Username, user.FirstName, user.LastName);
+
+            return userDTO;
         }
 
-        public IEnumerable<Card> Find(Expression<Func<Card, bool>> predicate)
+        public IEnumerable<CardDTO> GetAll()
         {
-            return _context.Cards.Where(predicate).ToList();
+            // Récupérez toutes les cartes de la base de données et les mappez vers CardDTO
+            return _context.Cards.Select(card => new CardDTO(card.IdCard,card.IdUser, card.isEnabled)).ToList();
         }
 
-        public void Remove(Card entity)
+        public CardDTO GetCardByUserId(int id)
         {
-            _context.Cards.Remove(entity);
-            _context.SaveChanges();
+            // Recherchez la carte par l'ID de l'utilisateur
+            var card = _context.Cards.FirstOrDefault(c => c.IdUser == id);
+
+            if (card == null)
+            {
+                Console.WriteLine("Card not found");
+                return null;
+            }
+
+            // Créez un DTO à partir de la carte trouvée
+            var cardDTO = new CardDTO(card.IdCard, card.IdUser, card.isEnabled);
+
+            return cardDTO;
         }
 
-        public void Update(Card entity)
+        public CardDTO GetLastAddedCard()
         {
-            _context.Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
+            var card = _context.Cards.OrderByDescending(c => c.IdCard).FirstOrDefault();
+            if (card != null)
+            {
+                return new CardDTO(card.IdCard, card.IdUser, card.isEnabled);
+            }
+            return null;
+
         }
+
+
+
+        public void Remove(int id)
+        {
+            var card = _context.Cards.Find(id);
+            if (card != null)
+            {
+                _context.Cards.Remove(card);
+                _context.SaveChanges();
+            }
+        }
+
+        public void Update(CardDTO entity)
+        {
+            var card = _context.Cards.Find(entity.IdCard);
+            if (card != null)
+            {
+                card.IdUser = entity.IdUser;
+                card.isEnabled = entity.IsEnabled;
+                _context.SaveChanges();
+            }
+        }
+
     }
 }

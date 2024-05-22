@@ -1,37 +1,34 @@
 ﻿using DAL.Models;
 using DAL.Repositories;
+using WebAPINormal.DTO;
 
 namespace WebAPINormal.Services
 {
     public class TransactionService
     {
-        private readonly IRepository<Transaction> _transactionRepository;
-        
+        private readonly TransactionRepository _transactionRepository;
 
-        public TransactionService(IRepository<Transaction> transactionRepository)
+        public TransactionService(TransactionRepository transactionRepository)
         {
             _transactionRepository = transactionRepository;
         }
 
         public void AddFinancialTransaction(int idUser, DateTime dateTimeStamp, string description, decimal amount)
         {
-            // Créer une nouvelle transaction financière
-            var newTransaction = new Transaction
-            {
-                IdUser = idUser,
-                TimeStamp = dateTimeStamp,
-                Description = description,
-                Amount = amount
-            };
-
-            // Ajouter la transaction à la base de données
+            var newTransaction = new TransactionDTO(idUser, amount, description, dateTimeStamp);
             _transactionRepository.Add(newTransaction);
         }
 
-        public IEnumerable<Transaction> getFinancialTransactionsByIdUser(int idUser)
+        public IEnumerable<TransactionDTO> GetTransactionsByIdUser(int idUser)
         {
-            // Récupérer les transactions financières pour un utilisateur donné
-            return _transactionRepository.Find(t => t.IdUser == idUser);
+            var transactions = _transactionRepository.GetTransactionsByUserId(idUser);
+            if (transactions == null)
+            {
+                throw new Exception($"No transactions found for user with ID {idUser}.");
+            }
+            return transactions;
+
+
         }
     }
 }

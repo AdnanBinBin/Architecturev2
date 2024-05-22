@@ -1,33 +1,53 @@
 ﻿using DAL.Models;
 using DAL.Repositories;
+using WebAPINormal.DTO;
 
 namespace WebAPINormal.Services
 {
     public class ProductRateService
     {
-        private readonly IRepository<ProductRate> _productRateRepository;
+        private readonly ProductRateRepository _productRateRepository;
 
-        public ProductRateService(IRepository<ProductRate> productRateRepository)
+        public ProductRateService(ProductRateRepository productRateRepository)
         {
             _productRateRepository = productRateRepository;
         }
 
-        public decimal getPriceByProductCode(string productCode)
+        public decimal GetPriceByProductCode(string productCode)
         {
-            var productRate = _productRateRepository.Find(pr => pr.ProductCode == productCode).FirstOrDefault();
-            return productRate?.Price ?? 0; // Si le produit n'est pas trouvé, retourne 0
+            var productRate = _productRateRepository.GetByProductCode(productCode);
+            if (productRate == null)
+            {
+                throw new Exception($"Product with code {productCode} not found.");
+            }
+            return productRate.Price;
         }
 
-        public string getProductNameByCode(string productCode)
+        public bool IsProductActive(int id)
         {
-            var productRate = _productRateRepository.Find(pr => pr.ProductCode == productCode).FirstOrDefault();
-            return productRate?.ProductName;
+            var productRate = _productRateRepository.GetById(id);
+            if (productRate == null)
+            {
+                throw new Exception($"Product with ID {id} not found.");
+            }
+            return productRate.IsActive;
         }
 
-        public bool isProductActive(string productCode)
+        public bool IsProductActive(string productCode)
         {
-            var productRate = _productRateRepository.Find(pr => pr.ProductCode == productCode).FirstOrDefault();
-            return productRate?.IsActive ?? false; // Si le produit n'est pas trouvé, retourne false
+            var productRate = _productRateRepository.GetByProductCode(productCode);
+            if (productRate == null)
+            {
+                throw new Exception($"Product with code {productCode} not found.");
+            }
+            return productRate.IsActive;
+        }
+
+        public void AddProductRate(string code, string name, decimal price, bool active)
+        {
+            var newProduct = new ProductRateDTO(code, name, price, active);
+
+            _productRateRepository.Add(newProduct);
         }
     }
 }

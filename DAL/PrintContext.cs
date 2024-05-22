@@ -17,7 +17,7 @@ namespace DAL
         public DbSet<Budget> Budgets { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<ProductRate> ProductRates { get; set; }
-        public DbSet<Transaction> Transactions{ get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
 
 
 
@@ -30,20 +30,25 @@ namespace DAL
         }
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-           // builder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=DigitecDB");
+             builder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ArchitecturePrintUseCaseV5");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
-                            .HasOne(u => u.Budget)
-                            .WithOne(b => b.User)
-                            .HasForeignKey<Budget>(b => b.IdUser);
+            .HasOne(u => u.Budget)
+            .WithOne(b => b.User)
+            .HasForeignKey<Budget>(b => b.IdUser);
+
+             modelBuilder.Entity<User>()
+            .HasOne(u => u.Card)
+            .WithOne(c => c.User)
+            .HasForeignKey<Card>(c => c.IdUser);
 
             modelBuilder.Entity<User>()
-        .HasOne(u => u.Card)
-        .WithOne(c => c.User)
-        .HasForeignKey<Card>(c => c.IdUser);
+           .HasMany(u => u.Transactions) // Un utilisateur peut avoir plusieurs transactions
+           .WithOne(t => t.User)         // Chaque transaction appartient à un seul utilisateur
+           .HasForeignKey(t => t.IdUser);
         }
     }
 }

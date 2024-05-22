@@ -6,10 +6,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPINormal.DTO;
 
 namespace DAL.Repositories
 {
-    public class ProductRateRepository : IRepository<ProductRate>
+    public class ProductRateRepository : IRepository<ProductRateDTO> // Adapter pour manipuler des DTO
     {
         private readonly PrintContext _context;
 
@@ -18,37 +19,124 @@ namespace DAL.Repositories
             _context = context;
         }
 
-        public void Add(ProductRate entity)
+        public void Add(ProductRateDTO entity)
         {
-            _context.ProductRates.Add(entity);
+            // Créez une nouvelle entité ProductRate à partir du DTO
+            var newProductRate = new ProductRate
+            {
+                ProductCode = entity.ProductCode,
+                ProductName = entity.ProductName,
+                Price = entity.Price,
+                IsActive = entity.IsActive
+                // Mappez les autres propriétés ici
+            };
+
+            // Ajoutez la nouvelle entité à la base de données
+            _context.ProductRates.Add(newProductRate);
             _context.SaveChanges();
         }
 
-        public ProductRate GetById(int id)
+        public ProductRateDTO GetById(int id)
         {
-            return _context.ProductRates.Find(id);
+            // Recherchez le ProductRate par son ID
+            var productRate = _context.ProductRates.Find(id);
+
+
+            if (productRate == null)
+            {
+                return null;
+            }
+
+            // Créez un DTO à partir de l'entité trouvée
+            var productRateDTO = new ProductRateDTO(
+                productRate.IdProduct,
+                productRate.ProductCode,
+                productRate.ProductName,
+                productRate.Price,
+                productRate.IsActive
+            // Ajoutez les autres propriétés si nécessaire
+            );
+
+            return productRateDTO;
         }
 
-        public IEnumerable<ProductRate> GetAll()
+        public IEnumerable<ProductRateDTO> GetAll()
         {
-            return _context.ProductRates.ToList();
+            // Récupérez tous les ProductRates de la base de données et les mappez vers des DTO
+            return _context.ProductRates.Select(productRate => new ProductRateDTO(
+                productRate.IdProduct,
+                productRate.ProductCode,
+                productRate.ProductName,
+                productRate.Price,
+                productRate.IsActive
+            // Ajoutez les autres propriétés si nécessaire
+            )).ToList();
         }
 
-        public IEnumerable<ProductRate> Find(Expression<Func<ProductRate, bool>> predicate)
+        public ProductRateDTO GetByProductCode(string productCode)
         {
-            return _context.ProductRates.Where(predicate).ToList();
+            // Recherchez le ProductRate par son code de produit
+            var productRate = _context.ProductRates.FirstOrDefault(p => p.ProductCode == productCode);
+
+            // Vérifiez si le produit a été trouvé
+            if (productRate != null)
+            {
+                // Créez un DTO à partir de l'entité trouvée
+                var productRateDTO = new ProductRateDTO(
+                    productRate.IdProduct,
+                    productRate.ProductCode,
+                    productRate.ProductName,
+                    productRate.Price,
+                    productRate.IsActive
+                // Ajoutez les autres propriétés si nécessaire
+                );
+
+                return productRateDTO;
+            }
+            
+                return null;
+            
+        } 
+
+        public bool IsProductActive(int id)
+        {
+            var productRate = _context.ProductRates.Find(id);
+            if (productRate != null)
+            {
+                return productRate.IsActive;
+            }
+            return false;
         }
 
-        public void Remove(ProductRate entity)
+
+
+        public void Remove(int id)
         {
-            _context.ProductRates.Remove(entity);
-            _context.SaveChanges();
+            // Recherchez le ProductRate par son ID
+            var productRate = _context.ProductRates.Find(id);
+            if (productRate != null)
+            {
+                // Supprimez le ProductRate de la base de données
+                _context.ProductRates.Remove(productRate);
+                _context.SaveChanges();
+            }
         }
 
-        public void Update(ProductRate entity)
+        public void Update(ProductRateDTO entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
+            // Recherchez le ProductRate par son ID
+            var productRate = _context.ProductRates.Find(entity.IdProduct);
+            if (productRate != null)
+            {
+                // Mettez à jour les propriétés du ProductRate avec celles du DTO
+                productRate.ProductCode = entity.ProductCode;
+                productRate.ProductName = entity.ProductName;
+                productRate.Price = entity.Price;
+                productRate.IsActive = entity.IsActive;
+
+                // Mettez à jour l'entité dans la base de données
+                _context.SaveChanges();
+            }
         }
     }
 }

@@ -1,59 +1,89 @@
 ﻿using DAL.Models;
 using DAL.Repositories;
+using WebAPINormal.DTO;
 
 namespace WebAPINormal.Services
 {
     public class CardService
     {
-        private readonly IRepository<Card> _cardRepository;
+        private readonly CardRepository _cardRepository;
 
-        public CardService(IRepository<Card> cardRepository)
+        public CardService(CardRepository cardRepository)
         {
             _cardRepository = cardRepository;
         }
 
         public void CreateCard(int idUser, bool isEnabled)
         {
-            // Logique de création de la carte
-            var newCard = new Card { IdUser = idUser, isEnabled = isEnabled };
-
-            // Ajouter la carte à la base de données
+            var newCard = new CardDTO(idUser, isEnabled);
             _cardRepository.Add(newCard);
         }
 
-        public void UpdateCardStatus(int userId, bool newStatus)
+        public void UpdateCardStatus(CardDTO card, bool status)
         {
-            // Récupérer la carte associée à l'utilisateur
-            var existingCard = _cardRepository.GetAll().FirstOrDefault(c => c.IdUser == userId);
-
-            if (existingCard != null)
+            var existingCard = _cardRepository.GetById(card.IdCard);
+            if (existingCard == null)
             {
-                // Mettre à jour le statut de la carte
-                existingCard.isEnabled = newStatus;
+                throw new Exception("Card not found for the user.");
+            }
 
-                // Mettre à jour la carte dans la base de données
-                _cardRepository.Update(existingCard);
-            }
-            else
-            {
-                Console.WriteLine("Card not found for the user.");
-            }
+            existingCard.IsEnabled = status;
+            _cardRepository.Update(existingCard);
         }
 
-        public void DeleteCard(int userId)
+        public bool GetCardStatus(int idCard)
         {
-            // Récupérer la carte associée à l'utilisateur
-            var existingCard = _cardRepository.GetAll().FirstOrDefault(c => c.IdUser == userId);
+            var existingCard = _cardRepository.GetById(idCard);
+            if (existingCard == null)
+            {
+                throw new Exception("Card not found for the user.");
+            }
+            return existingCard.IsEnabled;
+        }
 
-            if (existingCard != null)
+        public CardDTO GetCardById(int id)
+        {
+            var card = _cardRepository.GetById(id);
+            if (card == null)
             {
-                // Supprimer la carte de la base de données
-                _cardRepository.Remove(existingCard);
+                throw new Exception("Card not found for ID: " + id);
             }
-            else
+            return card;
+        }
+
+        public CardDTO GetLastAddedCard()
+        {
+            return _cardRepository.GetLastAddedCard();
+        }
+
+        public UserDTO GetUserByCardId(int id)
+        {
+            var user = _cardRepository.GetUserByCardId(id);
+            if (user == null)
             {
-                Console.WriteLine("Card not found for the user.");
+                throw new Exception("User not found for card ID: " + id);
             }
+            return user;
+        }
+
+        public CardDTO GetCardByUserId(int id)
+        {
+            var card = _cardRepository.GetCardByUserId(id);
+            if (card == null)
+            {
+                throw new Exception("Card not found for user ID: " + id);
+            }
+            return card;
+        }
+
+        public void DeleteCard(int cardId)
+        {
+            var existingCard = _cardRepository.GetById(cardId);
+            if (existingCard == null)
+            {
+                throw new Exception("Card not found.");
+            }
+            _cardRepository.Remove(cardId);
         }
     }
 }

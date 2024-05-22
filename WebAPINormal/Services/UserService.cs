@@ -1,49 +1,49 @@
 ﻿using DAL.DB.Model;
 using DAL.Repositories;
+using WebAPINormal.DTO;
 
 namespace WebAPINormal.Services
 {
     public class UserService
     {
+        private readonly UserRepository _userRepository;
 
-        private readonly IRepository<User> _userRepository;
-        private readonly IRepository<Budget> _budgetRepository;
-
-        public UserService(IRepository<User> userRepository, IRepository<Budget> budgetRepository)
+        public UserService(UserRepository userRepository)
         {
             _userRepository = userRepository;
-            _budgetRepository = budgetRepository;
         }
 
-
-        public void createUser(string firstName, string lastName, decimal balance)
+        public void CreateUser(string firstName, string lastName)
         {
-
-            string username = lastName.Substring(0, 2) + firstName.Substring(0, 1);
-
-            var newUser = new User
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Username = username
-            };
-
+            string username = lastName.Substring(0, 2) + firstName.Substring(0, 2);
+            var newUser = new UserDTO(username, firstName, lastName);
             _userRepository.Add(newUser);
+        }
 
-            int idUser = newUser.IdUser;
+        public UserDTO GetUser(int id)
+        {
+            var user = _userRepository.GetById(id);
+            if (user == null)
+            {
+                throw new Exception($"User with ID {id} not found.");
+            }
+            return user;
+        }
 
+        public UserDTO GetUserByUsername(string username)
+        {
+            var user = _userRepository.GetByUsername(username);
+            if (user == null)
+            {
+                throw new Exception($"User with username {username} not found.");
+            }
+            return user;
+        }
 
-
-            new BudgetService(_budgetRepository).createBudget(idUser, balance);
-
-
-
-
-
-
-        } 
-
-
+        public UserDTO GetLastAddedUser()
+        {
+            return _userRepository.GetLastAddedUser();
+        }
     }
 
 

@@ -1,106 +1,86 @@
 ﻿using DAL.DB.Model;
 using DAL.Models;
 using DAL.Repositories;
+using WebAPINormal.DTO;
 using WebAPINormal.Services;
 
 public class BudgetService
 {
-    private readonly IRepository<Budget> _budgetRepository;
+    private readonly BudgetRepository _budgetRepository;
+    private readonly CardService _cardService;
 
-
-    public BudgetService(IRepository<Budget> budgetRepository)
+    public BudgetService(BudgetRepository budgetRepository, CardService cardService)
     {
         _budgetRepository = budgetRepository;
+        _cardService = cardService;
     }
 
-    public void createBudget(int idUser, decimal initialBalance)
+    public void CreateBudget(int idUser, decimal initialBalance)
     {
-        // Logique de création du budget
-        var newBudget = new Budget { IdUser = idUser, Balance = initialBalance };
-
-        // Ajouter le budget à la base de données
-        _budgetRepository.Add(newBudget);
+        var newBudgetDTO = new BudgetDTO(idUser, initialBalance);
+        _budgetRepository.Add(newBudgetDTO);
     }
 
-    public decimal getBalanceByIdUser(int idUser)
+    public BudgetDTO GetBudgetByIdUser(int idUser)
     {
-        var budget = _budgetRepository.Find(b => b.IdUser == idUser).FirstOrDefault();
-        return budget?.Balance ?? 0;
-    }
-
-
-    public decimal getBalanceByUsername(string username)
-    {
-        var budget = _budgetRepository.Find(b => b.User.Username == username).FirstOrDefault();
-        return budget?.Balance ?? 0;
-    }
-
-    public void depositWithdraw(int idCard, decimal amount)
-    {
-        // Récupérer le budget associé à la carte spécifiée
-        var budget = _budgetRepository.Find(b => b.User.Card.IdCard == idCard).FirstOrDefault();
-
-        if (budget != null)
+        var budget = _budgetRepository.GetBudgetByIdUser(idUser);
+        if (budget == null)
         {
-            // Vérifier si la carte est activée
-            if (budget.User.Card.isEnabled)
-            {
-                // Vérifier si l'utilisateur est activé
-                
-                
-                    if (amount > 0)
-                    {
-                        // Effectuer le dépôt
-                        budget.Balance += amount;
-                        Console.WriteLine("Deposit successful. New balance: " + budget.Balance);
-                    }
-                    else
-                    {
-                        // Vérifier si le paiement est possible
-                        if (canPay(idCard, amount))
-                        {
-                            // Effectuer le retrait
-                            budget.Balance -= Math.Abs(amount);
-                            Console.WriteLine("Withdrawal successful. New balance: " + budget.Balance);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Payment is impossible. Not enough funds.");
-                        }
-                    }
+            throw new Exception($"Budget for user with ID {idUser} not found.");
+        }
+        return budget;
+    }
 
-                    // Mettre à jour le budget dans la base de données
-                    _budgetRepository.Update(budget);
-                
-            }
-            else
-            {
-                Console.WriteLine("Card is not enabled. Cannot perform transaction.");
-            }
+    public BudgetDTO GetBudgetByIdCard(int idCard)
+    {
+        var user = _cardService.GetUserByCardId(idCard);
+        var budget = _budgetRepository.GetBudgetByIdUser(user.IdUser);
+        if (budget == null)
+        {
+            throw new Exception($"Budget for user with ID {user.IdUser} not found.");
+        }
+        return budget;
+    }
+
+    public void Deposit(int idCard, decimal amount)
+    {
+        var budget = GetBudgetByIdCard(idCard);
+        if (!_cardService.GetCardStatus(idCard))
+        {
+            throw new Exception("Card is not enabled. Cannot perform transaction.");
+        }
+
+        budget.Balance += amount;
+        _budgetRepository.Update(budget);
+    }
+
+    public void Withdraw(int idCard, decimal amount)
+    {
+        var budget = GetBudgetByIdCard(idCard);
+        if (!_cardService.GetCardStatus(idCard))
+        {
+            throw new Exception("Card is not enabled. Cannot perform transaction.");
+        }
+
+        if (CanPay(budget, amount))
+        {
+            budget.Balance -= Math.Abs(amount);
+            _budgetRepository.Update(budget);
         }
         else
         {
-            // Gérer le cas où aucun budget n'est trouvé pour la carte spécifiée
-            Console.WriteLine("No budget found for the specified card.");
+            throw new Exception("Payment is impossible. Not enough funds.");
         }
     }
 
-    
-
-        public bool canPay(int idCard, decimal amount)
+    public bool CanPay(BudgetDTO budget, decimal amount)
     {
-        var budget = _budgetRepository.Find(b => b.User.Card.IdCard == idCard).FirstOrDefault();
-
-        if (budget != null)
-        {
-            return budget.Balance - Math.Abs(amount) >= 0;
-                
-        }
-        Console.WriteLine("budget not found");
-        return false;
+        return budget.Balance >= Math.Abs(amount);
     }
 }
-    
+
+
+
 
 
 

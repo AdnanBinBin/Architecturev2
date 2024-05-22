@@ -3,18 +3,30 @@
     public class CardDTO
     {
 
-        public int IdCard { get; set; }
-        public bool isEnabled { get; set; }
+        public int IdCard { get; set; } 
 
-        public CardDTO(int CID, int cardID, int idCard, bool enabled)
+        public bool IsEnabled { get; set; }
+
+        public int IdUser { get; set; }
+
+        public CardDTO(int UID, bool enabled)
+        {
+            IdUser = UID;
+            IsEnabled = enabled;
+        }
+
+        public CardDTO(int idCard, int uid, bool enabled)
         {
             IdCard = idCard;
-            isEnabled = enabled;
+            IdUser = uid;
+            IsEnabled = enabled;
         }
 
 
 
-        
+
+
+
 
     }
 }

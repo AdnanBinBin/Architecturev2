@@ -3,13 +3,20 @@
     public class BudgetDTO
     {
 
-        public BudgetDTO(int BID, decimal fund) {
-            Id = BID;
+        public BudgetDTO(int UID, decimal fund) {
+            IdUser = UID;
             Balance = fund;
-        
         }
 
-        public int Id { get; set; }
+        public BudgetDTO(int idbudget, int uid, decimal balance)
+        {
+            IdBudget = idbudget;
+            IdUser = uid;
+            Balance = balance;
+        }
+
+        public int IdBudget { get; set; }
         public decimal Balance { get; set; }
+        public int IdUser { get; set; }
     }
 }
