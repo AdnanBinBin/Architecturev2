@@ -4,7 +4,6 @@ using DAL.Models;
 using DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
-using PrintWebApp.Models;
 using System;
 using System.Linq;
 using System.Net;
@@ -19,7 +18,7 @@ namespace TestApp
         static void Main(string[] args)
         {
             var options = new DbContextOptionsBuilder<PrintContext>()
-            .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ArchitecturePrintUseCaseV5;Integrated Security=True;")
+            .UseSqlServer()
             .Options;
 
             using var context = new PrintContext(options);
@@ -35,8 +34,8 @@ namespace TestApp
             var transactionService = new TransactionService(transactionRepository);
             var productRateService = new ProductRateService(productRateRepository);
 
-            var accountManager = new AccountManager(userService, cardService, budgetService, transactionService, context);
-            var paymentManager = new PaymentManager(cardService, productRateService, budgetService, transactionService, context);
+            var accountManager = new AccountManager(userService, cardService, budgetService, transactionService);
+            var paymentManager = new PaymentManager(cardService, productRateService, budgetService, transactionService);
 
 
 

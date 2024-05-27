@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPINormal", "WebAPINormal\WebAPINormal.csproj", "{DF5B1A84-725F-4E1F-A97F-15F326828D18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO", "DTO\DTO.csproj", "{90C442F8-7A70-47F4-9145-9C3D74F269D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "DTO\DTO.csproj", "{90C442F8-7A70-47F4-9145-9C3D74F269D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{010BB380-D95D-4A59-A6E4-76CB40DEB110}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{90C442F8-7A70-47F4-9145-9C3D74F269D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90C442F8-7A70-47F4-9145-9C3D74F269D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90C442F8-7A70-47F4-9145-9C3D74F269D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{010BB380-D95D-4A59-A6E4-76CB40DEB110}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{010BB380-D95D-4A59-A6E4-76CB40DEB110}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{010BB380-D95D-4A59-A6E4-76CB40DEB110}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{010BB380-D95D-4A59-A6E4-76CB40DEB110}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

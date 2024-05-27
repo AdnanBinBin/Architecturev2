@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAPINormal.Manager;
 using WebAPINormal.DTO;
+using DTO;
 
 
 namespace WebAPINormal.Controllers
@@ -35,6 +36,29 @@ namespace WebAPINormal.Controllers
             }
         }
 
+        // GET: api/Account/GetUserByIdCard/5
+        [HttpGet("GetUserByIdCard/{idCard}")]
+        public ActionResult<UserDTO> GetUserByIdCard(int idCard) {
+            try
+            {
+                var user = _accountManager.GetUserByIdCard(idCard);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to get user by card ID: {ex.Message}");
+            }
+
+        }
+
+        
+
+
+
         // GET: api/Account/GetTransactionsByIdUser/5
         [HttpGet("GetTransactionsByIdUser/{idUser}")]
         public ActionResult<IEnumerable<TransactionDTO>> GetTransactionsByIdUser(int idUser)
@@ -52,11 +76,11 @@ namespace WebAPINormal.Controllers
 
         // POST: api/Account/CreateAccount
         [HttpPost("CreateAccount")]
-        public IActionResult CreateAccount(string firstName, string lastName, decimal initialAmount)
+        public IActionResult CreateAccount(AccountCreationDTO account)
         {
             try
             {
-                _accountManager.CreateAccount(firstName, lastName, initialAmount);
+                _accountManager.CreateAccount(account.FirstName, account.LastName, account.Balance);
                 return Ok("Account created successfully");
             }
             catch (Exception ex)
@@ -67,11 +91,11 @@ namespace WebAPINormal.Controllers
 
         // POST: api/Account/Deposit
         [HttpPost("Deposit")]
-        public IActionResult Deposit(int idCard, decimal amount)
+        public IActionResult Deposit(DepositDTO deposit)
         {
             try
             {
-                _accountManager.Deposit(idCard, amount);
+                _accountManager.Deposit(deposit.IdCard, deposit.Amount);
                 return Ok("Deposit successful");
             }
             catch (Exception ex)
@@ -82,11 +106,11 @@ namespace WebAPINormal.Controllers
 
         // POST: api/Account/CreateCard
         [HttpPost("CreateCard")]
-        public IActionResult CreateCard(int idUser, bool isEnabled)
+        public IActionResult CreateCard(CardDTO card)
         {
             try
             {
-                _accountManager.CreateCard(idUser, isEnabled);
+                _accountManager.CreateCard(card.IdCard, card.IsEnabled);
                 return Ok("Card created successfully");
             }
             catch (Exception ex)
@@ -97,11 +121,11 @@ namespace WebAPINormal.Controllers
 
         // PUT: api/Account/UpdateCardStatus
         [HttpPut("UpdateCardStatus")]
-        public IActionResult UpdateCardStatus(int idCard, bool status)
+        public IActionResult UpdateCardStatus(CardDTO card)
         {
             try
             {
-                _accountManager.UpdateCardStatus(idCard, status);
+                _accountManager.UpdateCardStatus(card.IdCard, card.IsEnabled);
                 return Ok("Card status updated successfully");
             }
             catch (Exception ex)
@@ -112,7 +136,7 @@ namespace WebAPINormal.Controllers
 
         // GET: api/Account/GetBudgetByIdCard/5
         [HttpGet("GetBudgetByIdCard/{idCard}")]
-        public ActionResult<BudgetDTO> GetBudgetByIdCard(int idCard)
+        public ActionResult<BudgetDTO> GetBudgetByIdCard(int idCard)    
         {
             try
             {
@@ -126,6 +150,21 @@ namespace WebAPINormal.Controllers
             catch (Exception ex)
             {
                 return BadRequest($"Failed to get budget by card ID: {ex.Message}");
+            }
+        }
+
+        // GET : api/Account/GetAllUsers
+        [HttpGet("GetAllUsers")]
+        public ActionResult<IEnumerable<UserDTO>> GetAllUsers()
+        {
+            try
+            {
+                var users = _accountManager.GetAllUsers();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to get users: {ex.Message}");
             }
         }
     }

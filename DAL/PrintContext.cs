@@ -30,7 +30,7 @@ namespace DAL
         }
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-             builder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ArchitecturePrintUseCaseV5");
+           //  builder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ArchitecturePrintUseCaseV5");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

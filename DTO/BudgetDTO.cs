@@ -13,6 +13,12 @@
             IdBudget = idbudget;
             IdUser = uid;
             Balance = balance;
+        
+        
+        }
+
+        public BudgetDTO()
+        {
         }
 
         public int IdBudget { get; set; }

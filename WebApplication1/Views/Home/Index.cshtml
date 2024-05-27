@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Accueil</title>
+</head>
+<body>
+    <h1>Bienvenue sur la page d'accueil</h1>
+
+    <form asp-controller="Home" asp-action="RedirectToStudentPage" method="get">
+        <button type="submit">Je suis un étudiant</button>
+    </form>
+
+    <form asp-controller="Home" asp-action="RedirectToSchoolPage" method="get">
+        <button type="submit">Je suis un établissement</button>
+    </form>
+</body>
+</html>

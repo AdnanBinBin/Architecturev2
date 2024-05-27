@@ -24,6 +24,10 @@
             LastName = lastName;
         }
 
+        public UserDTO()
+        {
+        }
+
 
 
 

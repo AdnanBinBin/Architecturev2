@@ -27,6 +27,10 @@
             IsActive = active;
         }
 
+        public ProductRateDTO()
+        {
+        }
+
 
     }
 }

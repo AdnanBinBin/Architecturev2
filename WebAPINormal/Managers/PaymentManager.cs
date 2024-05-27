@@ -39,6 +39,8 @@ namespace WebAPINormal.Manager
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to print: {ex.Message}");
+
+                throw;
             }
         }
 
@@ -53,6 +55,7 @@ namespace WebAPINormal.Manager
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to buy external product: {ex.Message}");
+                throw;
             }
         }
     }

@@ -28,6 +28,10 @@ namespace WebAPINormal.DTO
             TimeStamp = date;
         }
 
+        public TransactionDTO()
+        {
+        }
+
 
     }
 }

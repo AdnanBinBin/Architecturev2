@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<PrintContext>(options =>
 {
-    options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ArchitecturePrintUseCaseV5");
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 }, ServiceLifetime.Scoped); // Ajouter ServiceLifetime.Scoped
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<CardRepository>();

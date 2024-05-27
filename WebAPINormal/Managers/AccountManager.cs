@@ -33,6 +33,7 @@ namespace WebAPINormal.Manager
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to create account: {ex.Message}");
+                throw;
             }
         }
 
@@ -48,6 +49,7 @@ namespace WebAPINormal.Manager
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to deposit: {ex.Message}");
+                throw;
             }
         }
 
@@ -60,6 +62,7 @@ namespace WebAPINormal.Manager
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to create card: {ex.Message}");
+                throw;
             }
         }
 
@@ -73,6 +76,7 @@ namespace WebAPINormal.Manager
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to update card status: {ex.Message}");
+                throw;
             }
         }
 
@@ -85,7 +89,8 @@ namespace WebAPINormal.Manager
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to get budget by card ID: {ex.Message}");
-                return null;
+                throw;
+               
             }
         }
 
@@ -98,7 +103,8 @@ namespace WebAPINormal.Manager
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to get budget by user ID: {ex.Message}");
-                return null;
+                throw;
+               
             }
         }
 
@@ -111,7 +117,33 @@ namespace WebAPINormal.Manager
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to get transactions by user ID: {ex.Message}");
-                return Enumerable.Empty<TransactionDTO>();
+                throw;
+            }
+        }
+
+        public UserDTO GetUserByIdCard(int idCard)
+        {
+            try
+            {
+                return _cardService.GetUserByCardId(idCard);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to get user by card ID: {ex.Message}");
+                throw;
+            }
+        }
+
+        public IEnumerable<UserDTO> GetAllUsers()
+        {
+            try
+            {
+                return _userService.GetAllUsers();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to get all users: {ex.Message}");
+                throw;
             }
         }
     }

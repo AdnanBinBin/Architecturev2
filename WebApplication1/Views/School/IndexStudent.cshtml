@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Studenthome";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page des étudiants</title>
+</head>
+<body>
+    <h1>Bienvenue sur la page des étudiants</h1>
+
+    <form asp-controller="Student" asp-action="AddCardId" method="post">
+        <div>
+            <label for="cardID">Entrez votre card ID :</label>
+            <input type="text" id="cardID" name="cardID">
+        </div>
+        <button type="submit">Ajouter</button>
+    </form>
+</body>
+</html>

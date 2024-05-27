@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Student Information";
+    var user = ViewData["User"] as WebAPINormal.DTO.UserDTO;
+    var budget = ViewData["Budget"] as WebAPINormal.DTO.BudgetDTO;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Informations de l'étudiant</title>
+</head>
+<body>
+    <h1>Informations de l'étudiant</h1>
+
+    <div>
+        <h2>Détails de l'utilisateur</h2>
+        <p>Nom: @user.FirstName</p>
+        <p>Nom de famille : @user.LastName</p>
+        <!-- Ajoutez d'autres détails de l'utilisateur ici -->
+    </div>
+
+    <div>
+        <h2>Budget</h2>
+        <p>Montant: @budget.Balance</p>
+        <!-- Ajoutez d'autres détails du budget ici -->
+    </div>
+</body>
+</html>

@@ -44,6 +44,16 @@ namespace WebAPINormal.Services
         {
             return _userRepository.GetLastAddedUser();
         }
+
+        public IEnumerable <UserDTO> GetAllUsers()
+        {
+            
+           var users = _userRepository.GetAll() ?? throw new Exception("No users found.");
+            return users;
+        }
+        
+
+        
     }
 
 

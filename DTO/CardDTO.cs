@@ -22,6 +22,10 @@
             IsEnabled = enabled;
         }
 
+        public CardDTO()
+        {
+        }
+
 
 
 
