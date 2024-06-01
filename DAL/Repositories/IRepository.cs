@@ -12,7 +12,7 @@ namespace DAL.Repositories
         TEntity GetById(int id);
         IEnumerable<TEntity> GetAll();
         void Add(TEntity entity);
-        void Remove(int id);
+        bool Remove(int id);
         void Update(TEntity entity);
     }
 }

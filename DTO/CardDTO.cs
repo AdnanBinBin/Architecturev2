@@ -9,9 +9,9 @@
 
         public int IdUser { get; set; }
 
-        public CardDTO(int UID, bool enabled)
+        public CardDTO(int uid, bool enabled)
         {
-            IdUser = UID;
+            IdUser = uid;
             IsEnabled = enabled;
         }
 

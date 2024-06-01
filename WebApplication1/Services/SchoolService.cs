@@ -69,20 +69,12 @@ namespace MVCProject.Services
                 var users = JsonSerializer.Deserialize<List<UserDTO>>(responseBody, options);
                 return users;
         }
-           
-        
 
-        
-
-
-
-
-        public async Task Deposit(DepositDTO deposit)
+        public async Task DepositAll(decimal amount)
         {
-
             try
             {
-                var response = await _httpClient.PostAsJsonAsync($"{_accountBaseUrl}/Deposit", deposit);
+                var response = await _httpClient.PostAsync($"{_accountBaseUrl}/DepositAll?amount={amount}", null);
                 response.EnsureSuccessStatusCode();
             }
             catch (HttpRequestException ex)
@@ -90,6 +82,35 @@ namespace MVCProject.Services
                 throw new Exception("Une erreur s'est produite lors du dépôt.", ex);
             }
         }
+
+
+
+
+        public async Task Deposit(DepositDTO deposit)
+        {
+            HttpResponseMessage response = null;
+            try
+            {
+                response = await _httpClient.PostAsJsonAsync($"{_accountBaseUrl}/Deposit", deposit);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException ex)
+            {
+                if (response != null)
+                {
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Une erreur s'est produite lors du dépôt : {responseBody}", ex);
+                }
+                else
+                {
+                    throw new Exception("Une erreur s'est produite lors du dépôt et la réponse était nulle.", ex);
+                }
+            }
+        }
+
+         
+
+       
 
         public async Task CreateAccount(AccountCreationDTO accountData)
         {
@@ -124,6 +145,19 @@ namespace MVCProject.Services
                 return null;
             }
 
+        }
+
+        public async Task RemoveAccount(int idUser)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsync($"{_accountBaseUrl}/RemoveAccount?idUser={idUser}", null);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception("Une erreur s'est produite lors de la suppression du compte.", ex);
+            }
         }
     }
 }

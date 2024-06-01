@@ -1,5 +1,6 @@
 ﻿using DTO;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography.X509Certificates;
 using WebAPINormal.DTO;
 using WebApplication1.Models;
 using WebApplication1.Services;
@@ -47,16 +48,14 @@ namespace WebApplication1.Controllers
             return View(studentInfos);
         }
 
-        
+
         public IActionResult RedirectAccountCreation()
         {
             return View("~/Views/School/CreateAccount.cshtml");
         }
 
-        public async Task<IActionResult> SubmitUser(AccountCreationDTO accountCreationDTO )
+        public async Task<IActionResult> SubmitUser(AccountCreationDTO accountCreationDTO)
         {
-            
-
             try
             {
                 await _schoolService.CreateAccount(accountCreationDTO);
@@ -91,8 +90,71 @@ namespace WebApplication1.Controllers
                 return View("UpdateCard", users);
             }
         }
+
+       
+        public async Task<IActionResult> DeleteAccount(int idUser)
+        {
+            try
+            {
+                await _schoolService.RemoveAccount(idUser);
+                return RedirectToAction("IndexSchool");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                // Rediriger vers l'action IndexSchool pour réafficher les informations avec le message d'erreur
+                return RedirectToAction("IndexSchool");
+            }
+        }
+
+        public IActionResult RedirectDepositAll()
+        {
+            
+            return View("DepositAll");
+        }
+
+        public async Task<IActionResult> SubmitDepositAll(decimal amount)
+        {
+            try
+            {
+                await _schoolService.DepositAll(amount);
+                return RedirectToAction("IndexSchool");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return RedirectToAction("IndexSchool");
+            }
+        }
+        public async Task<IActionResult> RedirectDeposit()
+        {
+            var users = await _schoolService.GetAllUsers();
+            return View("DepositFaculty", users);
+        }
+
+        public async Task<IActionResult> SubmitDeposit(int idUser, decimal amount)
+        {
+            try
+            {
+                CardDTO card = await _schoolService.GetCardByIdUser(idUser);
+                DepositDTO depositDTO = new DepositDTO(card.IdCard, amount);
+                await _schoolService.Deposit(depositDTO);
+
+                // await _schoolService.Deposit();
+                return RedirectToAction("IndexSchool");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("~/Views/Errors/ErrorDepositViewSchool.cshtml");
+            }
+        }
     }
+
+
+    
 }
+
 
 
 

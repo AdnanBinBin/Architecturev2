@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Deposit All";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deposit All</title>
+</head>
+<body>
+    <h1>Deposit to All Users</h1>
+
+    <form asp-controller="School" asp-action="SubmitDepositAll" method="post">
+        <div>
+            <label for="Amount">Deposit Amount:</label>
+            <input type="number" id="Amount" name="Amount" required step="0.01" min="0">
+        </div>
+        <button type="submit">Deposit to All Users</button>
+    </form>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <p style="color: red;">@ViewBag.ErrorMessage</p>
+    }
+</body>
+</html>

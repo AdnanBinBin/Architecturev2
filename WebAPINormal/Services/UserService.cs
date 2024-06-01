@@ -40,6 +40,15 @@ namespace WebAPINormal.Services
             return user;
         }
 
+        public void RemoveUser(int idUser)
+        {
+            bool isRemoved = _userRepository.Remove(idUser);
+            if (!isRemoved)
+            {
+                throw new Exception("Failed to remove user. User not found.");
+            }
+        }
+
         public UserDTO GetLastAddedUser()
         {
             return _userRepository.GetLastAddedUser();

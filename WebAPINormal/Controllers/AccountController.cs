@@ -55,6 +55,9 @@ namespace WebAPINormal.Controllers
 
         }
 
+
+       
+
         
 
 
@@ -104,7 +107,37 @@ namespace WebAPINormal.Controllers
             }
         }
 
-        
+
+        [HttpPost("DepositAll")]
+        public IActionResult DepositAll(decimal amount)
+        {
+            try
+            {
+                _accountManager.DepositAll(amount);
+                return Ok("Deposit successful");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to deposit all: {ex.Message}");
+            }
+        }
+
+
+        [HttpPost("RemoveAccount")]
+        public IActionResult RemoveAccount(int idUser)
+        {
+            try
+            {
+                _accountManager.RemoveAccount(idUser);
+                return Ok("Account removed successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to remove account: {ex.Message}");
+            }
+        }
+
+
 
         // PUT: api/Account/UpdateCardStatus
         [HttpPut("UpdateCardStatus")]
@@ -120,6 +153,8 @@ namespace WebAPINormal.Controllers
                 return BadRequest($"Failed to update card status: {ex.Message}");
             }
         }
+
+
 
         // GET: api/Account/GetBudgetByIdCard/5
         [HttpGet("GetBudgetByIdCard/{idCard}")]

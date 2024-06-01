@@ -30,6 +30,15 @@ namespace WebAPINormal.Services
 
 
         }
+
+        public void RemoveTransaction(int idTransaction)
+        {
+            bool isRemoved = _transactionRepository.Remove(idTransaction);
+            if (!isRemoved)
+            {
+                throw new Exception($"Transaction with ID {idTransaction} not found.");
+            }
+        }
     }
 }
 

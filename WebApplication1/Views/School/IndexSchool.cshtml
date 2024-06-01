@@ -12,11 +12,17 @@
 <body>
     <h1>Welcome to the administrative page</h1>
 
-    <form asp-controller="School" asp-action="RedirectAccountCreation">
+    <form asp-controller="School" asp-action="RedirectAccountCreation" method="post">
         <button type="submit">Create New Account</button>
     </form>
-    <form asp-controller="School" asp-action="RedirectUpdateCard">
+    <form asp-controller="School" asp-action="RedirectUpdateCard" method="post">
         <button type="submit">Update Card</button>
+    </form>
+    <form asp-controller="School" asp-action="RedirectDepositAll" method="post">
+        <button type="submit">Deposit All</button>
+    </form>
+    <form asp-controller="School" asp-action="RedirectDeposit" method="post">
+        <button type="submit">Deposit chosen user </button>
     </form>
 
     <table>
@@ -29,6 +35,7 @@
                 <th>Budget Balance</th>
                 <th>Card ID</th>
                 <th>Enabled</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -39,12 +46,23 @@
                     <td>@studentInfo.User.FirstName</td>
                     <td>@studentInfo.User.LastName</td>
                     <td>@studentInfo.User.Username</td>
-                    <td>@studentInfo.Budget.Balance</td>
+                    <td>@(studentInfo.Budget != null ? studentInfo.Budget.Balance.ToString("C") : "N/A")</td>
                     <td>@(studentInfo.Card != null ? studentInfo.Card.IdCard.ToString() : "N/A")</td>
                     <td>@(studentInfo.Card != null ? (studentInfo.Card.IsEnabled ? "Yes" : "No") : "N/A")</td>
+                    <td>
+                        <form asp-controller="School" asp-action="DeleteAccount" method="post" style="display:inline;">
+                            <input type="hidden" name="idUser" value="@studentInfo.User.IdUser" />
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <p style="color: red;">@ViewBag.ErrorMessage</p>
+    }
 </body>
 </html>

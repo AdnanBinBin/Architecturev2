@@ -85,5 +85,14 @@ namespace WebAPINormal.Services
             }
             return productRate;
         }
+
+        public void RemoveProductRate(int idProductRate)
+        {
+            bool isRemoved = _productRateRepository.Remove(idProductRate);
+            if (!isRemoved)
+            {
+                throw new Exception($"Failed to remove product rate with ID {idProductRate}. Product rate not found.");
+            }
+        }
     }
 }

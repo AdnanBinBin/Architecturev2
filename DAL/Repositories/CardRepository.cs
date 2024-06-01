@@ -107,14 +107,16 @@ namespace DAL.Repositories
 
 
 
-        public void Remove(int id)
+        public bool Remove(int id)
         {
             var card = _context.Cards.Find(id);
             if (card != null)
             {
                 _context.Cards.Remove(card);
                 _context.SaveChanges();
+                return true; // La suppression a réussi
             }
+            return false; // La carte n'a pas été trouvée, donc la suppression a échoué
         }
 
         public void Update(CardDTO entity)

@@ -78,13 +78,13 @@ namespace WebAPINormal.Services
 
         public void DeleteCard(int cardId)
         {
-            var existingCard = _cardRepository.GetById(cardId);
-            if (existingCard == null)
+            bool isRemoved = _cardRepository.Remove(cardId);
+            if (!isRemoved)
             {
-                throw new Exception("Card not found.");
+                throw new Exception("Failed to remove card. Card not found.");
             }
-            _cardRepository.Remove(cardId);
         }
     }
 }
+
 

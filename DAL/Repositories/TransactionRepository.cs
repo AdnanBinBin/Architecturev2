@@ -90,14 +90,16 @@ namespace DAL.Repositories
         }
 
 
-        public void Remove(int id)
+        public bool Remove(int id)
         {
             var transaction = _context.Transactions.Find(id);
             if (transaction != null)
             {
                 _context.Transactions.Remove(transaction);
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
 
         public void Update(TransactionDTO entity)

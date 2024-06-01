@@ -1,0 +1,34 @@
+﻿@model IEnumerable<WebAPINormal.DTO.UserDTO>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deposit Faculty</title>
+</head>
+<body>
+    <h1>Deposit for a chosen user</h1>
+
+    <form asp-controller="School" asp-action="SubmitDeposit" method="post">
+        <div>
+            <label for="idUser">Username:</label>
+            <select id="idUser" name="idUser" required>
+                <option value="">Select a username</option>
+                @foreach (var user in Model)
+                {
+                    <option value="@user.IdUser">@user.Username</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label for="Amount">Amount:</label>
+            <input type="number" id="Amount" name="Amount" required step="0.01" min="0">
+        </div>
+        <button type="submit">Deposit</button>
+    </form>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <p style="color: red;">@ViewBag.ErrorMessage</p>
+    }
+</body>
+</html>

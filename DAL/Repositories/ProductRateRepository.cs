@@ -110,7 +110,7 @@ namespace DAL.Repositories
 
 
 
-        public void Remove(int id)
+        public bool Remove(int id)
         {
             // Recherchez le ProductRate par son ID
             var productRate = _context.ProductRates.Find(id);
@@ -119,7 +119,9 @@ namespace DAL.Repositories
                 // Supprimez le ProductRate de la base de données
                 _context.ProductRates.Remove(productRate);
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
 
         public void Update(ProductRateDTO entity)

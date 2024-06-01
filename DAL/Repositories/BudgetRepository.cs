@@ -77,19 +77,19 @@ namespace DAL.Repositories
             return budgetDTO;
         }
 
-         
 
-
-
-        public void Remove(int id)
+        public bool Remove(int id)
         {
             var budget = _context.Budgets.Find(id);
             if (budget != null)
             {
                 _context.Budgets.Remove(budget);
                 _context.SaveChanges();
+                return true; 
             }
+            return false;   
         }
+
 
         public void Update(BudgetDTO entity)
         {

@@ -68,16 +68,16 @@ namespace DAL.Repositories
             return _dbContext.Users.Select(user => new UserDTO(user.IdUser,user.Username, user.FirstName, user.LastName)).ToList();
         }
 
-        public void Remove(int id)
+        public bool Remove(int id)
         {
-            // Rechercher l'utilisateur par son ID
             var user = _dbContext.Users.Find(id);
             if (user != null)
             {
-                // Supprimer l'utilisateur de la base de données
                 _dbContext.Users.Remove(user);
                 _dbContext.SaveChanges();
+                return true; 
             }
+            return false; 
         }
 
         public UserDTO GetByUsername(string username)

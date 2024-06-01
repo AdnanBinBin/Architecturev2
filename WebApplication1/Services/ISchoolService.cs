@@ -13,7 +13,11 @@ namespace WebApplication1.Services
         Task<List<TransactionDTO?>> GetTransactionsByIdUser(int idUser);
         Task UpdateCardStatus(CardUpdateDTO card);
         Task <CardDTO> GetCardByIdUser(int idUser);
+        Task DepositAll(decimal amount);
 
-        
+        Task RemoveAccount(int idUser);
+
+
+
     }
 }

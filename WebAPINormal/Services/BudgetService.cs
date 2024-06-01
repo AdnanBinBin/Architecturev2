@@ -54,8 +54,20 @@ public class BudgetService
         _budgetRepository.Update(budget);
     }
 
-    
-    
+    public void RemoveBudget(int idBudget)
+    {
+        bool isRemoved = _budgetRepository.Remove(idBudget);
+        if (!isRemoved)
+        {
+            throw new Exception("Failed to remove budget. Budget not found.");
+        }
+    }
+
+
+
+
+
+
 
     public void Withdraw(int idCard, decimal amount)
     {

@@ -53,6 +53,53 @@ namespace WebAPINormal.Manager
             }
         }
 
+        public void DepositAll(decimal amount)
+        {
+            try
+            {
+                var users = _userService.GetAllUsers();
+                foreach (var user in users)
+                {
+                    var card = _cardService.GetCardByUserId(user.IdUser);
+                    if (card == null)
+                    {
+                        continue;
+                    }
+                    if (card.IsEnabled)
+                    {
+                        _budgetService.Deposit(card.IdCard, amount);
+                        _transactionService.AddFinancialTransaction(user.IdUser, DateTime.Now, "General deposit for all users", amount);
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to deposit all: {ex.Message}");
+                throw;
+            }
+        }
+
+        public void RemoveAccount(int idUser)
+        {
+            try
+            {
+                var card = _cardService.GetCardByUserId(idUser);
+               var budget = _budgetService.GetBudgetByIdUser(idUser);
+                _cardService.DeleteCard(card.IdCard);
+               _budgetService.RemoveBudget(budget.IdBudget);
+                _userService.RemoveUser(idUser);
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to remove account: {ex.Message}");
+                throw;
+            }
+        }
+
+     
+
         
 
         public void CreateCard(int idUser, bool isEnabled)
