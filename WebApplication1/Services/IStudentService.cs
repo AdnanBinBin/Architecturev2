@@ -6,11 +6,16 @@ namespace WebApplication1.Services
     public interface IStudentService
     {
 
-        Task<PrintProductDTO>Print(PrintProductDTO print);
+        Task Print(PrintProductDTO print);
         Task<BudgetDTO>GetBudgetByIdUser(int idUser);
         Task<List<TransactionDTO?>> GetTransactionsByIdUser(int idUser);
-        Task<ExternalProductDTO> BuyExternalProduct(ExternalProductDTO externalProduct);
+        Task BuyExternalProduct(ExternalProductDTO externalProduct);
         Task<UserDTO> GetUserByIdCard(int idCard);
+        Task Deposit(DepositDTO deposit);
+        Task<List<ProductRateDTO>> ProductRateList();
+        Task<ProductRateDTO> ProductRateByCode(string code);
+
+
 
 
     }

@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Studenthome";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page des étudiants</title>
+    <style>
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the student's page</h1>
+
+    <!-- Afficher le message d'erreur s'il existe -->
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <p class="error-message">@ViewBag.ErrorMessage</p>
+    }
+
+    <form asp-controller="Student" asp-action="AddCardId" method="post">
+        <div>
+            <label for="cardID">Enter your card ID :</label>
+            <input type="text" id="cardID" name="cardID">
+        </div>
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>

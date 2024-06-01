@@ -8,11 +8,11 @@ namespace DTO
 {
     public class PrintProductDTO
     {
-        public string IdCard { get; set; }
+        public int IdCard { get; set; }
         public string ProductCode { get; set; }
         public int Quantity { get; set; }
 
-        public PrintProductDTO(string idCard, string productCode, int quantity)
+        public PrintProductDTO(int idCard, string productCode, int quantity)
         {
             IdCard = idCard;
             ProductCode = productCode;

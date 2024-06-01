@@ -25,7 +25,7 @@ builder.Services.AddScoped<BudgetService>();
 builder.Services.AddScoped<TransactionService>();
 builder.Services.AddScoped<ProductRateService>();
 builder.Services.AddScoped<AccountManager>();
-builder.Services.AddScoped<PaymentManager>();
+builder.Services.AddScoped<PrintManager>();
 
 
 

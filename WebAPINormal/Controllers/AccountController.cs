@@ -104,28 +104,15 @@ namespace WebAPINormal.Controllers
             }
         }
 
-        // POST: api/Account/CreateCard
-        [HttpPost("CreateCard")]
-        public IActionResult CreateCard(CardDTO card)
-        {
-            try
-            {
-                _accountManager.CreateCard(card.IdCard, card.IsEnabled);
-                return Ok("Card created successfully");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Failed to create card: {ex.Message}");
-            }
-        }
+        
 
         // PUT: api/Account/UpdateCardStatus
         [HttpPut("UpdateCardStatus")]
-        public IActionResult UpdateCardStatus(CardDTO card)
+        public IActionResult UpdateCardStatus(CardUpdateDTO card)
         {
             try
             {
-                _accountManager.UpdateCardStatus(card.IdCard, card.IsEnabled);
+                _accountManager.UpdateCardStatus(card.IdUser, card.IsEnabled);
                 return Ok("Card status updated successfully");
             }
             catch (Exception ex)
@@ -165,6 +152,26 @@ namespace WebAPINormal.Controllers
             catch (Exception ex)
             {
                 return BadRequest($"Failed to get users: {ex.Message}");
+            }
+        }
+
+        // GET: api/Account/GetCardByIdUser/5
+        [HttpGet("GetCardByIdUser/{idUser}")]
+        public ActionResult<CardDTO> GetCardByIdUser(int idUser)
+        {
+            try
+            {
+                var card = _accountManager.GetCardByIdUser(idUser);
+                if (card == null)
+                {
+                    return NotFound();
+                }
+                return Ok(card);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to get card by user ID: {ex.Message}");
+                
             }
         }
     }

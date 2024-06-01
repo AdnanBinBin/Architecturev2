@@ -1,4 +1,5 @@
 ﻿using DTO;
+using Microsoft.AspNetCore.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -11,7 +12,7 @@ using WebApplication1.Services;
 
 namespace WebAPINormal.Controllers
 {
-    
+
     public class StudentService : IStudentService
     {
         private readonly HttpClient _httpClient;
@@ -44,26 +45,43 @@ namespace WebAPINormal.Controllers
             var response = await _httpClient.GetAsync($"{_accountBaseUrl}/GetTransactionsByIdUser/{idUser}");
             response.EnsureSuccessStatusCode();
             var responseBody = await response.Content.ReadAsStringAsync();
-            var transactions = JsonSerializer.Deserialize<List<TransactionDTO>>(responseBody);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var transactions = JsonSerializer.Deserialize<List<TransactionDTO>>(responseBody, options);
             return transactions;
         }
 
-        public async Task<PrintProductDTO> Print(PrintProductDTO print)
+        public async Task Print(PrintProductDTO print)
         {
-            var response = await _httpClient.PostAsJsonAsync($"{_paymentBaseUrl}/Print", print);
-            response.EnsureSuccessStatusCode();
-            var responseBody = await response.Content.ReadAsStringAsync();
-            var printProduct = JsonSerializer.Deserialize<PrintProductDTO>(responseBody);
-            return printProduct;
+            HttpResponseMessage response = null;
+            try
+            {
+                response = await _httpClient.PostAsJsonAsync($"{_paymentBaseUrl}/Print", print);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException ex)
+            {
+                if (response != null)
+                {
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"An error occurred during the print: {responseBody}", ex);
+                }
+                else
+                {
+                    throw new Exception("An error occurred during the print and the response was null.", ex);
+                }
+            }
         }
 
-        public async Task<ExternalProductDTO> BuyExternalProduct(ExternalProductDTO externalProduct)
+        public async Task BuyExternalProduct(ExternalProductDTO externalProduct)
         {
             var response = await _httpClient.PostAsJsonAsync($"{_paymentBaseUrl}/BuyExternalProduct", externalProduct);
             response.EnsureSuccessStatusCode();
             var responseBody = await response.Content.ReadAsStringAsync();
             var externalProductResponse = JsonSerializer.Deserialize<ExternalProductDTO>(responseBody);
-            return externalProductResponse;
+            
         }
 
         public async Task<UserDTO> GetUserByIdCard(int idCard)
@@ -78,6 +96,51 @@ namespace WebAPINormal.Controllers
             {
                 return null;
             }
+        }
+
+        public async Task Deposit(DepositDTO deposit)
+        {
+            HttpResponseMessage response = null;
+            try
+            {
+                response = await _httpClient.PostAsJsonAsync($"{_accountBaseUrl}/Deposit", deposit);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException ex)
+            {
+                if (response != null)
+                {
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Une erreur s'est produite lors du dépôt : {responseBody}", ex);
+                }
+                else
+                {
+                    throw new Exception("Une erreur s'est produite lors du dépôt et la réponse était nulle.", ex);
+                }
+            }
+        }
+
+
+        public async Task<List<ProductRateDTO>> ProductRateList()
+        {
+            var response = await _httpClient.GetAsync($"{_paymentBaseUrl}/GetAllProductsRates");
+            response.EnsureSuccessStatusCode();
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var productRates = JsonSerializer.Deserialize<List<ProductRateDTO>>(responseBody, options);
+            return productRates;
+        }
+
+        public async Task<ProductRateDTO> ProductRateByCode(string code)
+        {
+            var response = await _httpClient.GetAsync($"{_paymentBaseUrl}/GetProductRateByCode/{code}");
+            response.EnsureSuccessStatusCode();
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var productRate = JsonSerializer.Deserialize<ProductRateDTO>(responseBody);
+            return productRate;
         }
 
 

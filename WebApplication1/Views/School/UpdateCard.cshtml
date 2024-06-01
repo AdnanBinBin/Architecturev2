@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebAPINormal.DTO.UserDTO>
+
+@{
+    ViewData["Title"] = "Update Card";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Card status</title>
+</head>
+<body>
+    <h1>Create a new card</h1>
+
+    <form asp-controller="School" asp-action="SubmitCard" method="post">
+        <div>
+            <label for="IdUser">User ID:</label>
+            <select id="IdUser" name="IdUser" required>
+                <option value="">Select a user</option>
+                @foreach (var user in Model)
+                {
+                    <option value="@user.IdUser">@user.FirstName @user.LastName (@user.IdUser)</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label>Enabled:</label><br>
+            <input type="radio" id="IsEnabledYes" name="IsEnabled" value="true" required>
+            <label for="IsEnabledYes">Yes</label><br>
+            <input type="radio" id="IsEnabledNo" name="IsEnabled" value="false" required>
+            <label for="IsEnabledNo">No</label><br>
+        </div>
+        <button type="submit">Update Card</button>
+    </form>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <p style="color: red;">@ViewBag.ErrorMessage</p>
+    }
+</body>
+</html>

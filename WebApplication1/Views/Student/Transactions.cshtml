@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebAPINormal.DTO.TransactionDTO>
+
+@{
+    ViewData["Title"] = "Transactions";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transactions</title>
+</head>
+<body>
+    <h1>List of transactions</h1>
+
+    @if (Model != null && Model.Any())
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var transaction in Model.OrderByDescending(t => t.TimeStamp))
+                {
+                    <tr>
+                        <td>@transaction.Amount</td>
+                        <td>@transaction.Description</td>
+                        <td>@transaction.TimeStamp.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No available transaction.</p>
+    }
+
+    <form asp-controller="Student" asp-action="GetStudentInfo">
+        <button type="submit">Go Back</button>
+    </form>
+</body>
+</html>

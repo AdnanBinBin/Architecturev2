@@ -19,9 +19,9 @@ namespace WebAPINormal.Services
             _cardRepository.Add(newCard);
         }
 
-        public void UpdateCardStatus(CardDTO card, bool status)
+        public void UpdateCardStatus(int idCard, bool status)
         {
-            var existingCard = _cardRepository.GetById(card.IdCard);
+            var existingCard = _cardRepository.GetById(idCard);
             if (existingCard == null)
             {
                 throw new Exception("Card not found for the user.");

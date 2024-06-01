@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DTO;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography.X509Certificates;
+using WebApplication1.Models;
 using WebApplication1.Services;
 
 namespace WebApplication1.Controllers
@@ -13,38 +16,135 @@ namespace WebApplication1.Controllers
         {
             _studentService = studentService;
         }
-        public IActionResult Index()
+        public IActionResult IndexStudent()
         {
+            ViewBag.ErrorMessage = TempData["ErrorMessage"]; 
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetStudentInfo(int cardID)
+        public IActionResult AddCardId(int cardId)
         {
-            // Call the service method to get the user by card ID
-            var user = await _studentService.GetUserByIdCard(cardID);
+            HttpContext.Session.SetInt32("CardId", cardId);
+            return RedirectToAction("GetStudentInfo");
+        }
+
+
+
+        public async Task<IActionResult> GetStudentInfo()
+        {
+            int? cardId = HttpContext.Session.GetInt32("CardId");
+
+            if (cardId == null)
+            {
+                return RedirectToAction("IndexStudent");
+            }
+
+            var user = await _studentService.GetUserByIdCard(cardId.Value);
 
             if (user == null)
             {
-                // Handle the case where user is not found
-                return View("UserNotFound");
+                TempData["ErrorMessage"] = "Invalid card ID. Please try again."; 
+                return RedirectToAction("IndexStudent");
             }
 
-            // Call the service method to get the budget by user ID
             var budget = await _studentService.GetBudgetByIdUser(user.IdUser);
 
-            if (budget == null)
+
+            var model = new StudentInfoViewModel
             {
-                // Handle the case where budget is not found
-                return View("BudgetNotFound");
+                User = user,
+                Budget = budget
+            };
+
+            return View("StudentInfo", model);
+        }
+
+        public IActionResult RedirectDepositStudent()
+        {
+            return View("DepositStudent");
+        }
+
+        public async Task<IActionResult> RedirectPrint()
+        {
+            var products = await _studentService.ProductRateList();
+
+            return View("Print", products);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SubmitPrint(string productCode, int quantity)
+        {
+            int? cardId = HttpContext.Session.GetInt32("CardId");
+
+            if (cardId == null)
+            {
+                return RedirectToAction("IndexStudent");
             }
 
-            // Pass data to the view
-            ViewData["User"] = user;
-            ViewData["Budget"] = budget;
+            var printProduct = new PrintProductDTO
+            {
+                IdCard = cardId.Value,
+                ProductCode = productCode,
+                Quantity = quantity
+            };
 
-            // Return a view to display student's information
-            return View("StudentInfo");
+            try
+            {
+                await _studentService.Print(printProduct);
+                return RedirectToAction("GetStudentInfo");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("~/Views/Errors/ErrorDepositView.cshtml");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SubmitDeposit(int amount)
+        {
+            int? cardId = HttpContext.Session.GetInt32("CardId");
+
+            if (cardId == null)
+            {
+                return RedirectToAction("IndexStudent");
+            }
+
+            var deposit = new DepositDTO(cardId.Value, amount);
+
+            try
+            {
+                await _studentService.Deposit(deposit);
+                return RedirectToAction("GetStudentInfo");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("~/Views/Errors/ErrorDepositView.cshtml"); 
+            }
+
+
+
+
+        }
+
+        public async Task<IActionResult> RedirectTransactions()
+        {
+            int? cardId = HttpContext.Session.GetInt32("CardId");
+
+            if (cardId == null)
+            {
+                return RedirectToAction("IndexStudent");
+            }
+
+            var user = await _studentService.GetUserByIdCard(cardId.Value);
+
+
+            var transactions = await _studentService.GetTransactionsByIdUser(user.IdUser);
+
+            return View("Transactions", transactions);
+
         }
     }
 }

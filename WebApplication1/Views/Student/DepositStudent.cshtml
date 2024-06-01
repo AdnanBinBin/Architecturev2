@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Deposit";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Déposer des fonds</title>
+</head>
+<body>
+    <h1>Déposer des fonds</h1>
+
+    <form asp-controller="Student" asp-action="SubmitDeposit" method="post">
+        <div>
+            <label for="amount">Montant à déposer :</label>
+            <input type="number" id="amount" name="amount">
+        </div>
+        <button type="submit">Déposer</button>
+    </form>
+</body>
+</html>

@@ -72,64 +72,59 @@ namespace MVCProject.Services
            
         
 
-        // Implémentez de manière similaire les autres méthodes...
+        
 
 
 
 
-        public async Task<DepositDTO> Deposit(DepositDTO deposit)
+        public async Task Deposit(DepositDTO deposit)
         {
-          
+
+            try
+            {
                 var response = await _httpClient.PostAsJsonAsync($"{_accountBaseUrl}/Deposit", deposit);
-                if (response.IsSuccessStatusCode)
-                {
-                    var depositReturn = await response.Content.ReadFromJsonAsync<DepositDTO>();
-                    return depositReturn;
-                }
-                else
-                {
-                    return null;
-                }
+                response.EnsureSuccessStatusCode();
             }
-
-        public async Task<AccountCreationDTO> CreateAccount(AccountCreationDTO accountData)
-        {
-            var response = await _httpClient.PostAsJsonAsync($"{_accountBaseUrl}/CreateAccount", accountData);
-            if (response.IsSuccessStatusCode)
+            catch (HttpRequestException ex)
             {
-                var account = await response.Content.ReadFromJsonAsync<AccountCreationDTO>();
-                return account;
-            }
-            else
-            {
-                return null;
+                throw new Exception("Une erreur s'est produite lors du dépôt.", ex);
             }
         }
 
-        public async Task<CardDTO> CreateCard(CardDTO card)
+        public async Task CreateAccount(AccountCreationDTO accountData)
         {
-            var response = await _httpClient.PostAsJsonAsync($"{_accountBaseUrl}/CreateCard", card);
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var cardReturn = await response.Content.ReadFromJsonAsync<CardDTO>();
-                return cardReturn;
+                var response = await _httpClient.PostAsJsonAsync($"{_accountBaseUrl}/CreateAccount", accountData);
+                response.EnsureSuccessStatusCode();
             }
-            else
+            catch (HttpRequestException ex)
             {
-                return null;
+                throw new Exception("Une erreur s'est produite lors de la création du compte.", ex);
             }
         }
 
-        public async Task UpdateCardStatus(CardDTO card)
+
+        public async Task UpdateCardStatus(CardUpdateDTO card)
         {
             var response = await _httpClient.PutAsJsonAsync($"{_accountBaseUrl}/UpdateCardStatus", card);
             response.EnsureSuccessStatusCode();
         }
 
+        public async Task<CardDTO> GetCardByIdUser(int idUser)
+        {
+            var response = await _httpClient.GetAsync($"{_accountBaseUrl}/GetCardByIdUser/{idUser}");
+            if (response.IsSuccessStatusCode)
+            {
+                var card = await response.Content.ReadFromJsonAsync<CardDTO>();
+                return card;
+            }
+            else
+            {
+                return null;
+            }
 
-
-
-
+        }
     }
 }
 

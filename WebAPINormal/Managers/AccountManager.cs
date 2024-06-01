@@ -29,6 +29,7 @@ namespace WebAPINormal.Manager
                 _userService.CreateUser(firstName, lastName);
                 var user = _userService.GetLastAddedUser();
                 _budgetService.CreateBudget(user.IdUser, initialAmount);
+                _cardService.CreateCard(user.IdUser, true);
             }
             catch (Exception ex)
             {
@@ -42,7 +43,6 @@ namespace WebAPINormal.Manager
             try
             {
                 var user = _cardService.GetUserByCardId(idCard);
-                Console.WriteLine($"User found: {user.Username}, {user.IdUser}");
                 _budgetService.Deposit(idCard, amount);
                 _transactionService.AddFinancialTransaction(user.IdUser, DateTime.Now, "Deposit", amount);
             }
@@ -52,6 +52,8 @@ namespace WebAPINormal.Manager
                 throw;
             }
         }
+
+        
 
         public void CreateCard(int idUser, bool isEnabled)
         {
@@ -66,16 +68,32 @@ namespace WebAPINormal.Manager
             }
         }
 
-        public void UpdateCardStatus(int idCard, bool status)
+        public void UpdateCardStatus(int idUser, bool status)
         {
+
+
             try
+
             {
-                var card = _cardService.GetCardById(idCard);
-                _cardService.UpdateCardStatus(card, status);
+                var card = _cardService.GetCardByUserId(idUser);
+                _cardService.UpdateCardStatus(card.IdCard, status);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to update card status: {ex.Message}");
+                throw;
+            }
+        }
+
+        public CardDTO GetCardByIdUser(int idUser)
+        {
+            try
+            {
+                return _cardService.GetCardByUserId(idUser);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to get card by user ID: {ex.Message}");
                 throw;
             }
         }

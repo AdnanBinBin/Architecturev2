@@ -46,7 +46,7 @@ namespace DAL
             .HasForeignKey<Card>(c => c.IdUser);
 
             modelBuilder.Entity<User>()
-           .HasMany(u => u.Transactions) // Un utilisateur peut avoir plusieurs transactions
+           .HasMany(u => u.Transactions) // Un utilisateur peut avoir plusieurs trans actions
            .WithOne(t => t.User)         // Chaque transaction appartient à un seul utilisateur
            .HasForeignKey(t => t.IdUser);
         }

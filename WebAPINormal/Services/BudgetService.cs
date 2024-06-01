@@ -54,6 +54,9 @@ public class BudgetService
         _budgetRepository.Update(budget);
     }
 
+    
+    
+
     public void Withdraw(int idCard, decimal amount)
     {
         var budget = GetBudgetByIdCard(idCard);

@@ -35,7 +35,7 @@ namespace TestApp
             var productRateService = new ProductRateService(productRateRepository);
 
             var accountManager = new AccountManager(userService, cardService, budgetService, transactionService);
-            var paymentManager = new PaymentManager(cardService, productRateService, budgetService, transactionService);
+            var paymentManager = new PrintManager(cardService, productRateService, budgetService, transactionService);
 
 
 

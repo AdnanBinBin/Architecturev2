@@ -1,7 +1,7 @@
-﻿@{
+﻿@model WebApplication1.Models.StudentInfoViewModel
+
+@{
     ViewData["Title"] = "Student Information";
-    var user = ViewData["User"] as WebAPINormal.DTO.UserDTO;
-    var budget = ViewData["Budget"] as WebAPINormal.DTO.BudgetDTO;
 }
 
 <!DOCTYPE html>
@@ -14,15 +14,27 @@
 
     <div>
         <h2>Détails de l'utilisateur</h2>
-        <p>Nom: @user.FirstName</p>
-        <p>Nom de famille : @user.LastName</p>
+        <p>Firstname: @Model.User.FirstName</p>
+        <p>Lastname: @Model.User.LastName</p>
         <!-- Ajoutez d'autres détails de l'utilisateur ici -->
     </div>
 
     <div>
         <h2>Budget</h2>
-        <p>Montant: @budget.Balance</p>
+        <p>Amount: @Model.Budget.Balance</p>
         <!-- Ajoutez d'autres détails du budget ici -->
     </div>
+
+    <form asp-controller="Student" asp-action="RedirectDepositStudent" method="post">
+        <button type="submit">Deposit</button>
+    </form>
+    <form asp-controller="Student" asp-action="RedirectPrint" method="post">
+        <button type="submit">Print</button>
+    </form>
+    <form asp-controller="Student" asp-action="RedirectTransactions" method="post">
+        <button type="submit">See transactions</button>
+    </form>
+
+
 </body>
 </html>

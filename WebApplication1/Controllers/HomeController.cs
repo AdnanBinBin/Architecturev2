@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 namespace WebApplication1.Controllers
 {
@@ -11,12 +12,12 @@ namespace WebApplication1.Controllers
 
         public IActionResult RedirectToStudentPage()
         {
-            return View("IndexStudent");
+            return View("~/Views/Student/IndexStudent.cshtml");
         }
 
         public IActionResult RedirectToSchoolPage()
         {
-            return View("IndexSchool");
+            return RedirectToAction("IndexSchool", "School");
         }
     }
 }
