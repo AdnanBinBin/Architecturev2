@@ -15,10 +15,10 @@ namespace DAL.Models
         [Key]
         public int IdTransaction { get; set; }
 
-        public int IdUser { get; set; } // Clé étrangère vers l'utilisateur
-        public User User { get; set; } // Navigation vers l'utilisateur associé à la transaction
-        public DateTime TimeStamp { get; set; } // Date et heure de la transaction
-        public string Description { get; set; } // Description de la transaction
-        public decimal Amount { get; set; } // Montant de la transaction
+        public int IdUser { get; set; } 
+        public User User { get; set; } 
+        public DateTime TimeStamp { get; set; } 
+        public string Description { get; set; } 
+        public decimal Amount { get; set; }
     }
 }
