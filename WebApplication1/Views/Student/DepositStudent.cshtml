@@ -10,6 +10,11 @@
 <body>
     <h1>Déposer des fonds</h1>
 
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <p style="color: red;">@TempData["ErrorMessage"]</p>
+    }
+
     <form asp-controller="Student" asp-action="SubmitDeposit" method="post">
         <div>
             <label for="amount">Montant à déposer :</label>

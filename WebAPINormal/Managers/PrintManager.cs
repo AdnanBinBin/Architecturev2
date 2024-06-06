@@ -31,6 +31,11 @@ namespace WebAPINormal.Manager
                 {
                     throw new Exception("Product is not active.");
                 }
+
+                if(quantity <= 0)
+                {
+                    throw new Exception("Quantity must be greater than 0.");
+                }
                 var price = _productRateService.GetPriceByProductCode(productCode);
                 var total = price * quantity;
                 

@@ -7,18 +7,17 @@ using WebApplication1.Services;
 namespace WebApplication1.Controllers
 {
     public class StudentController : Controller
-
     {
-
         private readonly IStudentService _studentService;
 
         public StudentController(IStudentService studentService)
         {
             _studentService = studentService;
         }
+
         public IActionResult IndexStudent()
         {
-            ViewBag.ErrorMessage = TempData["ErrorMessage"]; 
+            ViewBag.ErrorMessage = TempData["ErrorMessage"];
             return View();
         }
 
@@ -29,14 +28,13 @@ namespace WebApplication1.Controllers
             return RedirectToAction("GetStudentInfo");
         }
 
-
-
         public async Task<IActionResult> GetStudentInfo()
         {
             int? cardId = HttpContext.Session.GetInt32("CardId");
 
             if (cardId == null)
             {
+                TempData["ErrorMessage"] = "Card ID is missing.";
                 return RedirectToAction("IndexStudent");
             }
 
@@ -44,12 +42,11 @@ namespace WebApplication1.Controllers
 
             if (user == null)
             {
-                TempData["ErrorMessage"] = "Invalid card ID. Please try again."; 
+                TempData["ErrorMessage"] = "Invalid card ID. Please try again.";
                 return RedirectToAction("IndexStudent");
             }
 
             var budget = await _studentService.GetBudgetByIdUser(user.IdUser);
-
 
             var model = new StudentInfoViewModel
             {
@@ -68,7 +65,6 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> RedirectPrint()
         {
             var products = await _studentService.ProductRateList();
-
             return View("Print", products);
         }
 
@@ -79,6 +75,7 @@ namespace WebApplication1.Controllers
 
             if (cardId == null)
             {
+                TempData["ErrorMessage"] = "Card ID is missing.";
                 return RedirectToAction("IndexStudent");
             }
 
@@ -96,8 +93,8 @@ namespace WebApplication1.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMessage = ex.Message;
-                return View("~/Views/Errors/ErrorDepositView.cshtml");
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("GetStudentInfo");
             }
         }
 
@@ -108,6 +105,7 @@ namespace WebApplication1.Controllers
 
             if (cardId == null)
             {
+                TempData["ErrorMessage"] = "Card ID is missing.";
                 return RedirectToAction("IndexStudent");
             }
 
@@ -120,13 +118,9 @@ namespace WebApplication1.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMessage = ex.Message;
-                return View("~/Views/Errors/ErrorDepositView.cshtml"); 
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("GetStudentInfo");
             }
-
-
-
-
         }
 
         public async Task<IActionResult> RedirectTransactions()
@@ -135,17 +129,15 @@ namespace WebApplication1.Controllers
 
             if (cardId == null)
             {
+                TempData["ErrorMessage"] = "Card ID is missing.";
                 return RedirectToAction("IndexStudent");
             }
 
             var user = await _studentService.GetUserByIdCard(cardId.Value);
 
-
             var transactions = await _studentService.GetTransactionsByIdUser(user.IdUser);
 
             return View("Transactions", transactions);
-
         }
     }
 }
-

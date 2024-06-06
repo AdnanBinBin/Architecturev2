@@ -16,9 +16,9 @@
     <h1>Welcome to the student's page</h1>
 
     <!-- Afficher le message d'erreur s'il existe -->
-    @if (ViewBag.ErrorMessage != null)
+    @if (TempData["ErrorMessage"] != null)
     {
-        <p class="error-message">@ViewBag.ErrorMessage</p>
+        <p style="color: red;">@TempData["ErrorMessage"]</p>
     }
 
     <form asp-controller="Student" asp-action="AddCardId" method="post">

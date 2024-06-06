@@ -12,6 +12,11 @@
 <body>
     <h1>Imprimer un produit</h1>
 
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <p style="color: red;">@TempData["ErrorMessage"]</p>
+    }
+
 
     <form asp-controller="Student" asp-action="SubmitPrint" method="post">
         <div>
