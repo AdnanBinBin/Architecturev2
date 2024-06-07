@@ -12,12 +12,11 @@
     <div class="container">
         <h1 class="text-center my-4">Welcome to the student's page</h1>
 
-        <!-- Display the error message if it exists -->
-        @if (ViewBag.ErrorMessage != null)
-        {
-            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
-        }
-
+        <!-- Afficher le message d'erreur s'il existe -->
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <p style="color: red;">@TempData["ErrorMessage"]</p>
+    }
         <form asp-controller="Student" asp-action="AddCardId" method="post" class="my-4">
             <div class="form-group">
                 <label for="cardID">Enter your card ID :</label>

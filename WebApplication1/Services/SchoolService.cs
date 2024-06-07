@@ -79,7 +79,7 @@ namespace MVCProject.Services
             }
             catch (HttpRequestException ex)
             {
-                throw new Exception("Une erreur s'est produite lors du dépôt.", ex);
+                throw new Exception("An error occured during the deposit all", ex);
             }
         }
 
@@ -99,11 +99,11 @@ namespace MVCProject.Services
                 if (response != null)
                 {
                     var responseBody = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Une erreur s'est produite lors du dépôt : {responseBody}", ex);
+                    throw new Exception($"An error occured during the deposit: {responseBody}", ex);
                 }
                 else
                 {
-                    throw new Exception("Une erreur s'est produite lors du dépôt et la réponse était nulle.", ex);
+                    throw new Exception("An error occured during the deposit and the response was null", ex);
                 }
             }
         }
@@ -121,7 +121,7 @@ namespace MVCProject.Services
             }
             catch (HttpRequestException ex)
             {
-                throw new Exception("Une erreur s'est produite lors de la création du compte.", ex);
+                throw new Exception("An error occured during the creation of the account", ex);
             }
         }
 
@@ -156,7 +156,7 @@ namespace MVCProject.Services
             }
             catch (HttpRequestException ex)
             {
-                throw new Exception("Une erreur s'est produite lors de la suppression du compte.", ex);
+                throw new Exception("An error occured during the removal of the account", ex);
             }
         }
     }

@@ -8,6 +8,10 @@
         <title>Déposer des fonds</title>
     </head>
     <body>
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <p style="color: red;">@TempData["ErrorMessage"]</p>
+    }
         <div class="container">
             <h1 class="text-center my-4">Deposit money</h1>
                 <div class="row d-flex justify-content-center align-items-center h-100">

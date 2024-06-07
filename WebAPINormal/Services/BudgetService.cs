@@ -50,6 +50,11 @@ public class BudgetService
             throw new Exception("Card is not enabled. Cannot perform transaction.");
         }
 
+        if(amount <= 0)
+        {
+            throw new Exception("Amount must be greater than 0.");
+        }
+
         budget.Balance += amount;
         _budgetRepository.Update(budget);
     }
@@ -75,6 +80,11 @@ public class BudgetService
         if (!_cardService.GetCardStatus(idCard))
         {
             throw new Exception("Card is not enabled. Cannot perform transaction.");
+        }
+
+        if (amount <= 0)
+        {
+            throw new Exception("Amount must be greater than 0.");
         }
 
         if (CanPay(budget, amount))

@@ -18,7 +18,10 @@
 
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body text-center">
-
+  @if (TempData["ErrorMessage"] != null)
+    {
+        <p style="color: red;">@TempData["ErrorMessage"]</p>
+    }
                             <form asp-controller="Student" asp-action="SubmitPrint" method="post">
                                 <div class="layoutDiv">
                                     <label class="form-label" for="product">Select a product :</label>

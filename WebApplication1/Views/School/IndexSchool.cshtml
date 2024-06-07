@@ -26,7 +26,12 @@
             <button class="btn btn-primary" type="submit">Deposit chosen user</button>
         </form>
     </div>
-
+ @if (Model == null || !Model.Any())
+    {
+        <p>No users currently</p>
+    }
+    else
+    {
     <table class="table table-hover">
     <thead class="thead-dark">
         <tr>
@@ -61,6 +66,7 @@
         }
     </tbody>
 </table>
+    }
 
     @if (ViewBag.ErrorMessage != null)
     {

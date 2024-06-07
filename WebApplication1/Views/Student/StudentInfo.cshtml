@@ -13,6 +13,11 @@
         
         <div class="container">
             <h1 class="text-center my-4">Student's Information</h1>
+            
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <p style="color: red;">@TempData["ErrorMessage"]</p>
+    }
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-md-12 col-xl-4">
 
