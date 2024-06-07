@@ -6,27 +6,25 @@
 <html>
 <head>
     <title>Page des étudiants</title>
-    <style>
-        .error-message {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Welcome to the student's page</h1>
+    <div class="container">
+        <h1 class="text-center my-4">Welcome to the student's page</h1>
 
-    <!-- Afficher le message d'erreur s'il existe -->
-    @if (ViewBag.ErrorMessage != null)
-    {
-        <p class="error-message">@ViewBag.ErrorMessage</p>
-    }
+        <!-- Display the error message if it exists -->
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        }
 
-    <form asp-controller="Student" asp-action="AddCardId" method="post">
-        <div>
-            <label for="cardID">Enter your card ID :</label>
-            <input type="text" id="cardID" name="cardID">
-        </div>
-        <button type="submit">Add</button>
-    </form>
+        <form asp-controller="Student" asp-action="AddCardId" method="post" class="my-4">
+            <div class="form-group">
+                <label for="cardID">Enter your card ID :</label>
+                <input type="text" id="cardID" name="cardID" class="form-control">
+            </div>
+            <button type="submit" id="buttonAdd" class="btn btn-primary">Add</button>
+        </form>
+    </div>
 </body>
 </html>

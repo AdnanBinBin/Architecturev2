@@ -2,33 +2,46 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Deposit Faculty</title>
-</head>
-<body>
-    <h1>Deposit for a chosen user</h1>
+    <head>
+        <title>Deposit Faculty</title>
+    </head>
+    <body>
+    <div class="container">
 
-    <form asp-controller="School" asp-action="SubmitDeposit" method="post">
-        <div>
-            <label for="idUser">Username:</label>
-            <select id="idUser" name="idUser" required>
-                <option value="">Select a username</option>
-                @foreach (var user in Model)
-                {
-                    <option value="@user.IdUser">@user.Username</option>
-                }
-            </select>
-        </div>
-        <div>
-            <label for="Amount">Amount:</label>
-            <input type="number" id="Amount" name="Amount" required step="0.01" min="0">
-        </div>
-        <button type="submit">Deposit</button>
-    </form>
+        <h1 class="text-center my-4">Deposit for a chosen student</h1>
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-4">
 
-    @if (ViewBag.ErrorMessage != null)
-    {
-        <p style="color: red;">@ViewBag.ErrorMessage</p>
-    }
-</body>
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body text-center">
+
+                        <form asp-controller="School" asp-action="SubmitDeposit" method="post">
+                            <div>
+                                <label class="form-label" for="idUser">Username:</label>
+                                <select class="form-control" id="idUser" name="idUser" required>
+                                    <option value="">Select a username</option>
+                                    @foreach (var user in Model)
+                                    {
+                                        <option value="@user.IdUser">@user.Username</option>
+                                    }
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label" for="Amount">Amount:</label>
+                                <input class="form-control" type="number" id="Amount" name="Amount" required step="0.01" min="0">
+                            </div>
+                            <button class="btn btn-primary" type="submit">Deposit</button>
+                            <button class="btn btn-primary" type="submit">Go Back</button>
+
+                        </form>
+
+                        @if (ViewBag.ErrorMessage != null)
+                        {
+                            <p style="color: red;">@ViewBag.ErrorMessage</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

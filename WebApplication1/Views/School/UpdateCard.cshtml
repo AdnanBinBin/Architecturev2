@@ -6,36 +6,50 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Update Card status</title>
-</head>
-<body>
-    <h1>Create a new card</h1>
+    <head>
+        <title>Update Card status</title>
+    </head>
+    <body>
+            <div class="container">
 
-    <form asp-controller="School" asp-action="SubmitCard" method="post">
-        <div>
-            <label for="IdUser">User ID:</label>
-            <select id="IdUser" name="IdUser" required>
-                <option value="">Select a user</option>
-                @foreach (var user in Model)
-                {
-                    <option value="@user.IdUser">@user.FirstName @user.LastName (@user.IdUser)</option>
-                }
-            </select>
-        </div>
-        <div>
-            <label>Enabled:</label><br>
-            <input type="radio" id="IsEnabledYes" name="IsEnabled" value="true" required>
-            <label for="IsEnabledYes">Yes</label><br>
-            <input type="radio" id="IsEnabledNo" name="IsEnabled" value="false" required>
-            <label for="IsEnabledNo">No</label><br>
-        </div>
-        <button type="submit">Update Card</button>
-    </form>
+                <h1 class="text-center my-4">Update a card</h1>
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-md-12 col-xl-4">
 
-    @if (ViewBag.ErrorMessage != null)
-    {
-        <p style="color: red;">@ViewBag.ErrorMessage</p>
-    }
-</body>
+                        <div class="card" style="border-radius: 15px;">
+                            <div class="card-body text-center">
+
+                                <form asp-controller="School" asp-action="SubmitCard" method="post">
+                                    <div>
+                                        <label class="form-label" for="IdUser">User ID:</label>
+                                        <select class="form-select" id="IdUser" name="IdUser" required>
+                                            <option value="">Select a user</option>
+                                            @foreach (var user in Model)
+                                            {
+                                                <option value="@user.IdUser">@user.FirstName @user.LastName (@user.IdUser)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Enabled:</label><br>
+                                        <input  type="radio" id="IsEnabledYes" name="IsEnabled" value="true" required>
+                                        <label class="form-label" for="IsEnabledYes">Yes</label><br>
+                                        <input  type="radio" id="IsEnabledNo" name="IsEnabled" value="false" required>
+                                        <label class="form-label" for="IsEnabledNo">No</label><br>
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Update Card</button>
+                                    <button class="btn btn-primary" type="submit">Go Back</button>
+        
+                                </form>
+
+                                @if (ViewBag.ErrorMessage != null)
+                                {
+                                    <p style="color: red;">@ViewBag.ErrorMessage</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </body>
 </html>

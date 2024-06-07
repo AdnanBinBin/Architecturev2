@@ -12,53 +12,55 @@
 <body>
     <h1>Welcome to the administrative page</h1>
 
-    <form asp-controller="School" asp-action="RedirectAccountCreation" method="post">
-        <button type="submit">Create New Account</button>
-    </form>
-    <form asp-controller="School" asp-action="RedirectUpdateCard" method="post">
-        <button type="submit">Update Card</button>
-    </form>
-    <form asp-controller="School" asp-action="RedirectDepositAll" method="post">
-        <button type="submit">Deposit All</button>
-    </form>
-    <form asp-controller="School" asp-action="RedirectDeposit" method="post">
-        <button type="submit">Deposit chosen user </button>
-    </form>
+    <div class="d-flex justify-content-around formLayoutMargin">
+        <form asp-controller="School" asp-action="RedirectAccountCreation" method="post">
+            <button class="btn btn-primary" type="submit">Create New Account</button>
+        </form>
+        <form asp-controller="School" asp-action="RedirectUpdateCard" method="post">
+            <button class="btn btn-primary" type="submit">Update Card</button>
+        </form>
+        <form asp-controller="School" asp-action="RedirectDepositAll" method="post">
+            <button class="btn btn-primary" type="submit">Deposit All</button>
+        </form>
+        <form asp-controller="School" asp-action="RedirectDeposit" method="post">
+            <button class="btn btn-primary" type="submit">Deposit chosen user</button>
+        </form>
+    </div>
 
-    <table>
-        <thead>
+    <table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>User ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Budget Balance</th>
+            <th>Card ID</th>
+            <th>Enabled</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var studentInfo in Model)
+        {
             <tr>
-                <th>User ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-                <th>Budget Balance</th>
-                <th>Card ID</th>
-                <th>Enabled</th>
-                <th>Actions</th>
+                <td>@studentInfo.User.IdUser</td>
+                <td>@studentInfo.User.FirstName</td>
+                <td>@studentInfo.User.LastName</td>
+                <td>@studentInfo.User.Username</td>
+                <td>@(studentInfo.Budget != null ? studentInfo.Budget.Balance.ToString("C") : "N/A")</td>
+                <td>@(studentInfo.Card != null ? studentInfo.Card.IdCard.ToString() : "N/A")</td>
+                <td>@(studentInfo.Card != null ? (studentInfo.Card.IsEnabled ? "Yes" : "No") : "N/A")</td>
+                <td>
+                    <form asp-controller="School" asp-action="DeleteAccount" method="post" style="display:inline;">
+                        <input type="hidden" name="idUser" value="@studentInfo.User.IdUser" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var studentInfo in Model)
-            {
-                <tr>
-                    <td>@studentInfo.User.IdUser</td>
-                    <td>@studentInfo.User.FirstName</td>
-                    <td>@studentInfo.User.LastName</td>
-                    <td>@studentInfo.User.Username</td>
-                    <td>@(studentInfo.Budget != null ? studentInfo.Budget.Balance.ToString("C") : "N/A")</td>
-                    <td>@(studentInfo.Card != null ? studentInfo.Card.IdCard.ToString() : "N/A")</td>
-                    <td>@(studentInfo.Card != null ? (studentInfo.Card.IsEnabled ? "Yes" : "No") : "N/A")</td>
-                    <td>
-                        <form asp-controller="School" asp-action="DeleteAccount" method="post" style="display:inline;">
-                            <input type="hidden" name="idUser" value="@studentInfo.User.IdUser" />
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
     @if (ViewBag.ErrorMessage != null)
     {

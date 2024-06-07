@@ -6,16 +6,21 @@
 <html>
 <head>
     <title>Accueil</title>
+
 </head>
-<body>
-    <h1>Bienvenue sur la page d'accueil</h1>
+<body class="layoutBody">
+    <div class="container">
+        <h1 class="text-center my-4">Print Manager System</h1>
 
-    <form asp-controller="Home" asp-action="RedirectToStudentPage" method="get">
-        <button type="submit">Je suis un étudiant</button>
-    </form>
+        <form asp-controller="Home" asp-action="RedirectToStudentPage" method="get" class="mb-3">
+            <button type="submit" class="btn btn-primary btn-block">
+            <i class="fas fa-user-graduate"></i>I am a student</button>
+        </form>
 
-    <form asp-controller="Home" asp-action="RedirectToSchoolPage" method="get">
-        <button type="submit">Je suis un établissement</button>
-    </form>
+        <form asp-controller="Home" asp-action="RedirectToSchoolPage" method="get">
+            <button type="submit" class="btn btn-primary btn-block">
+            <i class="fas fa-chalkboard-teacher"></i>I am a faculty</button>
+        </form>
+    </div>
 </body>
 </html>

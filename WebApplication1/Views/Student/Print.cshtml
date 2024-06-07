@@ -6,32 +6,41 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Imprimer un produit</title>
-</head>
-<body>
-    <h1>Imprimer un produit</h1>
+    <head>
+        <title>Imprimer un produit</title>
+    </head>
+    <body>
+        <div class="container">
 
+            <h1 class="text-center my-4">Print a product</h1>
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-12 col-xl-4">
 
-    <form asp-controller="Student" asp-action="SubmitPrint" method="post">
-        <div>
-            <label for="product">Sélectionnez un produit :</label>
-            <select id="product" name="productCode">
-                @foreach (var product in Model)
-                {
-                    <option value="@product.ProductCode">@product.ProductName</option>
-                }
-            </select>
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body text-center">
+
+                            <form asp-controller="Student" asp-action="SubmitPrint" method="post">
+                                <div class="layoutDiv">
+                                    <label class="form-label" for="product">Select a product :</label>
+                                    <select class="form-select" id="product" name="productCode">
+                                        @foreach (var product in Model)
+                                        {
+                                            <option value="@product.ProductCode">@product.ProductName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="layoutDiv">
+                                    <label class="form-label" for="quantity">Quantity :</label>
+                                    <input class="form-control" type="number" id="quantity" name="quantity">
+                                </div>
+                                <button class="btn btn-primary" type="submit">Print</button>
+                                <button class="btn btn-primary" type="submit">Go Back</button>
+
+                            </form>
+                            <br>
+                        </div>
+                    </div>
+            </div>
         </div>
-        <div>
-            <label for="quantity">Quantité :</label>
-            <input type="number" id="quantity" name="quantity">
-        </div>
-        <button type="submit">Imprimer</button>
-    </form>
-    <br>
-    <form asp-controller="Student" asp-action="GetStudentInfo">
-        <button type="submit">Go Back</button>
-    </form>
-</body>
+    </body>
 </html>

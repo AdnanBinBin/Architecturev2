@@ -9,21 +9,35 @@
     <title>Create User</title>
 </head>
 <body>
-    <h1>Create a new user</h1>
+    <div class="container">
 
-    <form asp-controller="School" asp-action="SubmitUser" method="post">
-        <div>
-            <label for="FirstName">First Name:</label>
-            <input type="text" id="FirstName" name="FirstName" required>
+        <h1 class="text-center my-4">Create a user</h1>
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-4">
+
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body text-center">
+                        <form asp-controller="School" asp-action="SubmitUser" method="post">
+                            <div>
+                                <label class="form-label" for="FirstName">First Name:</label>
+                                <input class="form-control" type="text" id="FirstName" name="FirstName" required>
+                            </div>
+                            <div>
+                                <label class="form-label" for="LastName">Last Name:</label>
+                                <input class="form-control" type="text" id="LastName" name="LastName" required>
+                            </div>
+                            <div>
+                                <label class="form-label" for="Balance">Balance:</label>
+                                <input class="form-control" type="number" id="Balance" name="Balance" required>
+                            <button class="btn btn-primary" type="submit">Create User</button>
+                            <button class="btn btn-primary" type="submit">Go Back</button>
+
+                        </form>
+                        <br>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="LastName">Last Name:</label>
-            <input type="text" id="LastName" name="LastName" required>
-        </div>
-        <div>
-            <label for="Balance">Balance:</label>
-            <input type="number" id="Balance" name="Balance" required>
-        <button type="submit">Create User</button>
-    </form>
+    </div>
 </body>
 </html>

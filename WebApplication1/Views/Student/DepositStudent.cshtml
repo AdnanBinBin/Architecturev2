@@ -4,18 +4,33 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Déposer des fonds</title>
-</head>
-<body>
-    <h1>Déposer des fonds</h1>
+    <head>
+        <title>Déposer des fonds</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="text-center my-4">Deposit money</h1>
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-md-12 col-xl-4">
 
-    <form asp-controller="Student" asp-action="SubmitDeposit" method="post">
-        <div>
-            <label for="amount">Montant à déposer :</label>
-            <input type="number" id="amount" name="amount">
+                        <div class="card" style="border-radius: 15px;">
+                            <div class="card-body text-center">
+
+                                <form asp-controller="Student" asp-action="SubmitDeposit" method="post">
+                                    <div class="layoutDiv">
+                                        <label class="form-label" for="amount">Enter amount to deposit :</label>
+                                        <input class="form-control" placeholder="CHF" type="number" id="amount" name="amount">
+                                    </div>
+                                    <div class="layoutDiv">
+                                        <button class="btn btn-primary" type="submit">Deposit</button>
+                                        <button class="btn btn-primary" type="submit">Go Back</button>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
-        <button type="submit">Déposer</button>
-    </form>
-</body>
+    </body>
 </html>

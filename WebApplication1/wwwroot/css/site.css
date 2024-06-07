@@ -19,4 +19,80 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-image: url('..\\Assets\\hevsext.jpg');
+  background-size: cover;
+}
+.container {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.btn-block{
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Add transition */
+}
+
+.btn-block:hover{
+  background-color: #258cfb;
+  color: white; /* Change text color to white for better contrast */
+}
+
+.fa,.fas{
+  padding-right: 5%;
+  margin-top:2%;
+}
+
+.form-group{
+  width: 16%
+}
+.layoutDiv{
+  margin-bottom: 5%;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  color: #6c757d;
+}
+
+p {
+  font-size: 1.2em;
+}
+
+.info-table {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.info-table table {
+  width: 65%;
+  border-collapse: collapse;
+}
+
+.info-table th {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+}
+
+.info-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+.cardLayout {
+  width:100%;
+}
+
+.formLayoutMargin{
+  margin-top: 5%;
+  margin-bottom: 5%;
 }

@@ -6,41 +6,53 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Transactions</title>
-</head>
-<body>
-    <h1>List of transactions</h1>
+    <head>
+        <title>Transactions</title>
+    </head>
+    <body>
+         <div class="container">
+            <h1 class="text-center my-4">List of transactions</h1>
+               <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-md-12 col-xl-12">
 
-    @if (Model != null && Model.Any())
-    {
-        <table>
-            <thead>
-                <tr>
-                    <th>Amount</th>
-                    <th>Description</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var transaction in Model.OrderByDescending(t => t.TimeStamp))
-                {
-                    <tr>
-                        <td>@transaction.Amount</td>
-                        <td>@transaction.Description</td>
-                        <td>@transaction.TimeStamp.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <p>No available transaction.</p>
-    }
+                        <div class="card cardLayout" style="border-radius: 15px;">
+                            <div class="card-body text-center">
+                                @if (Model != null && Model.Any())
+                                {
+                                    <div class="info-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Amount</th>
+                                                <th>Description</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var transaction in Model.OrderByDescending(t => t.TimeStamp))
+                                            {
+                                                <tr>
+                                                    <td>@transaction.Amount</td>
+                                                    <td>@transaction.Description</td>
+                                                    <td>@transaction.TimeStamp.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p>No available transaction.</p>
+                                }
 
-    <form asp-controller="Student" asp-action="GetStudentInfo">
-        <button type="submit">Go Back</button>
-    </form>
-</body>
+                                <form asp-controller="Student" asp-action="GetStudentInfo">
+                                    <button class="btn btn-primary" type="submit">Go Back</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </body>
 </html>
