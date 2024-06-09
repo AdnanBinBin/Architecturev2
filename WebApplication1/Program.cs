@@ -17,8 +17,8 @@ builder.Services.AddSession(options =>
 
 
 // Configure HttpClient for Account API
-builder.Services.AddHttpClient<IStudentService, StudentService>();
-builder.Services.AddHttpClient<ISchoolService, SchoolService>();
+builder.Services.AddHttpClient<IStudentApiClient, StudentApiClient>();
+builder.Services.AddHttpClient<ISchoolApiClient, SchoolApiClient>();
 
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 

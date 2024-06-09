@@ -1,0 +1,8 @@
+@startuml
+class DepositDTO {
+    + IdCard : int <<get>> <<set>>
+    + Amount : decimal <<get>> <<set>>
+    + DepositDTO(idCard:int, amount:decimal)
+    + DepositDTO()
+}
+@enduml

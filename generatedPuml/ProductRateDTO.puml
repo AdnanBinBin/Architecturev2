@@ -1,0 +1,12 @@
+@startuml
+class ProductRateDTO {
+    + IdProduct : int <<get>> <<set>>
+    + ProductCode : string <<get>> <<set>>
+    + ProductName : string <<get>> <<set>>
+    + Price : decimal <<get>> <<set>>
+    + IsActive : bool <<get>> <<set>>
+    + ProductRateDTO(code:string, name:string, price:decimal, active:bool)
+    + ProductRateDTO(idProduct:int, code:string, name:string, price:decimal, active:bool)
+    + ProductRateDTO()
+}
+@enduml

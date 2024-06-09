@@ -1,0 +1,12 @@
+@startuml
+interface IStudentApiClient {
+    Print(print:PrintProductDTO) : Task
+    GetBudgetByIdUser(idUser:int) : Task<BudgetDTO>
+    GetTransactionsByIdUser(idUser:int) : Task<List<TransactionDTO?>>
+    BuyExternalProduct(externalProduct:ExternalProductDTO) : Task
+    GetUserByIdCard(idCard:int) : Task<UserDTO>
+    Deposit(deposit:DepositDTO) : Task
+    ProductRateList() : Task<List<ProductRateDTO>>
+    ProductRateByCode(code:string) : Task<ProductRateDTO>
+}
+@enduml

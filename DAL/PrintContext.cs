@@ -29,9 +29,7 @@ namespace DAL
         {
         }
 
-        public PrintContext(DbContextOptions options) : base(options)
-        {
-        }
+   
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
@@ -56,20 +54,20 @@ namespace DAL
            .HasForeignKey(t => t.IdUser);
 
             modelBuilder.Entity<User>().HasData(
-                new User { FirstName = "Adnan", LastName = "Binjos", Username = "Binjos.Adnan" },
-                new User { FirstName = "Adriano", LastName = "Dias", Username = "Dias.Adriano" }
+                new User { IdUser=1,FirstName = "Adnan", LastName = "Binjos", Username = "Binjos.Adnan" },
+                new User { IdUser=2,FirstName = "Adriano", LastName = "Dias", Username = "Dias.Adriano" }
             );
 
             modelBuilder.Entity<Card>().HasData(
-            new Card { IdUser = 1, isEnabled = true},
-            new Card { IdUser = 2, isEnabled = true }
+            new Card { IdCard = 1,IdUser = 1, isEnabled = true},
+            new Card { IdCard = 2,IdUser = 2, isEnabled = true }
              );
 
             modelBuilder.Entity<ProductRate>().HasData(
-            new ProductRate { ProductName = "A4 BW", IsActive = true, ProductCode = "A4BW", Price = 0.05M },
-            new ProductRate { ProductName = "A5 BW", IsActive = true, ProductCode = "A5BW", Price = 0.025M },
-            new ProductRate { ProductName = "A4 COLOR", IsActive = true, ProductCode = "A4COL", Price = 0.07M },
-            new ProductRate { ProductName = "A5 COLOR", IsActive = true, ProductCode = "A5COL", Price = 0.03M }
+            new ProductRate {IdProduct = 1, ProductName = "A4 BW", IsActive = true, ProductCode = "A4BW", Price = 0.05M },
+            new ProductRate {IdProduct = 2, ProductName = "A5 BW", IsActive = true, ProductCode = "A5BW", Price = 0.025M },
+            new ProductRate {IdProduct = 3, ProductName = "A4 COLOR", IsActive = true, ProductCode = "A4COL", Price = 0.07M },
+            new ProductRate {IdProduct = 4, ProductName = "A5 COLOR", IsActive = true, ProductCode = "A5COL", Price = 0.03M }
             );
 
         }

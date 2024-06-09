@@ -1,0 +1,17 @@
+@startuml
+class SchoolController {
+    + SchoolController(schoolService:ISchoolApiClient)
+    + <<async>> IndexSchool() : Task<IActionResult>
+    + RedirectAccountCreation() : IActionResult
+    + <<async>> SubmitUser(accountCreationDTO:AccountCreationDTO) : Task<IActionResult>
+    + <<async>> RedirectUpdateCard() : Task<IActionResult>
+    + <<async>> SubmitCard(cardUpdate:CardUpdateDTO) : Task<IActionResult>
+    + <<async>> DeleteAccount(idUser:int) : Task<IActionResult>
+    + RedirectDepositAll() : IActionResult
+    + <<async>> SubmitDepositAll(amount:decimal) : Task<IActionResult>
+    + <<async>> RedirectDeposit() : Task<IActionResult>
+    + <<async>> SubmitDeposit(idUser:int, amount:decimal) : Task<IActionResult>
+}
+Controller <|-- SchoolController
+SchoolController --> "_schoolService" ISchoolApiClient
+@enduml

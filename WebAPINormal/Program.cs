@@ -47,7 +47,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-/*if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     // Enable middleware to serve generated Swagger as a JSON endpoint.
     app.UseSwagger();
@@ -58,7 +58,7 @@ using (var scope = app.Services.CreateScope())
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "PrintAPIV1");
     });
-}*/
+}
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
@@ -69,6 +69,6 @@ app.Run();
 
 void seed(IServiceProvider serviceProvider)
 { 
-    using var context = new PrintContext(serviceProvider.GetRequiredService<DbContextOptions<DbContext>>());
+    using var context = new PrintContext(serviceProvider.GetRequiredService<DbContextOptions<PrintContext>>());
     var created = context.Database.EnsureCreated();
 }

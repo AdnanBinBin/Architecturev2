@@ -10,12 +10,12 @@ using WebApplication1.Services;
 
 namespace MVCProject.Services
 {
-    public class SchoolService : ISchoolService
+    public class SchoolApiClient : ISchoolApiClient
     {
         private readonly HttpClient _httpClient;
         private readonly string _accountBaseUrl;
 
-        public SchoolService(HttpClient httpClient, IConfiguration configuration)
+        public SchoolApiClient(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _accountBaseUrl = configuration["WebAPI:AccountURL"];

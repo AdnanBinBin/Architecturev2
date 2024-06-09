@@ -1,0 +1,6 @@
+@startuml
+class StudentInfoViewModel {
+}
+StudentInfoViewModel --> "User" UserDTO
+StudentInfoViewModel --> "Budget" BudgetDTO
+@enduml

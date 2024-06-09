@@ -1,0 +1,17 @@
+@startuml
+class SchoolApiClient {
+    - <<readonly>> _accountBaseUrl : string
+    + SchoolApiClient(httpClient:HttpClient, configuration:IConfiguration)
+    + <<async>> GetBudgetByIdUser(idUser:int) : Task<BudgetDTO?>
+    + <<async>> GetTransactionsByIdUser(idUser:int) : Task<List<TransactionDTO?>>
+    + <<async>> GetAllUsers() : Task<List<UserDTO?>>
+    + <<async>> DepositAll(amount:decimal) : Task
+    + <<async>> Deposit(deposit:DepositDTO) : Task
+    + <<async>> CreateAccount(accountData:AccountCreationDTO) : Task
+    + <<async>> UpdateCardStatus(card:CardUpdateDTO) : Task
+    + <<async>> GetCardByIdUser(idUser:int) : Task<CardDTO>
+    + <<async>> RemoveAccount(idUser:int) : Task
+}
+ISchoolApiClient <|-- SchoolApiClient
+SchoolApiClient --> "_httpClient" HttpClient
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class ExternalProductDTO {
+    + IdCard : int <<get>> <<set>>
+    + Amount : decimal <<get>> <<set>>
+    + ExternalProductDTO(idCard:int, amount:decimal)
+    + ExternalProductDTO()
+}
+@enduml

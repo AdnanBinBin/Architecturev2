@@ -1,0 +1,15 @@
+@startuml
+class StudentController {
+    + StudentController(studentService:IStudentApiClient)
+    + IndexStudent() : IActionResult
+    + AddCardId(cardId:int) : IActionResult
+    + <<async>> GetStudentInfo() : Task<IActionResult>
+    + RedirectDepositStudent() : IActionResult
+    + <<async>> RedirectPrint() : Task<IActionResult>
+    + <<async>> SubmitPrint(productCode:string, quantity:int) : Task<IActionResult>
+    + <<async>> SubmitDeposit(amount:int) : Task<IActionResult>
+    + <<async>> RedirectTransactions() : Task<IActionResult>
+}
+Controller <|-- StudentController
+StudentController --> "_studentService" IStudentApiClient
+@enduml

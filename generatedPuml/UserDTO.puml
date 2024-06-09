@@ -1,0 +1,11 @@
+@startuml
+class UserDTO {
+    + IdUser : int <<get>> <<set>>
+    + Username : string <<get>> <<set>>
+    + FirstName : string <<get>> <<set>>
+    + LastName : string <<get>> <<set>>
+    + UserDTO(username:string, firstName:string, lastName:string)
+    + UserDTO(idUser:int, username:string, firstName:string, lastName:string)
+    + UserDTO()
+}
+@enduml

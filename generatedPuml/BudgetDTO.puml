@@ -1,0 +1,10 @@
+@startuml
+class BudgetDTO {
+    + BudgetDTO(UID:int, fund:decimal)
+    + BudgetDTO(idbudget:int, uid:int, balance:decimal)
+    + BudgetDTO()
+    + IdBudget : int <<get>> <<set>>
+    + Balance : decimal <<get>> <<set>>
+    + IdUser : int <<get>> <<set>>
+}
+@enduml

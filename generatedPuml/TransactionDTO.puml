@@ -1,0 +1,12 @@
+@startuml
+class TransactionDTO {
+    + IdTransaction : int <<get>> <<set>>
+    + IdUser : int <<get>> <<set>>
+    + Amount : decimal <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + TransactionDTO(UID:int, amount:decimal, desc:string, date:DateTime)
+    + TransactionDTO(idTransaction:int, uid:int, amount:decimal, desc:string, date:DateTime)
+    + TransactionDTO()
+}
+TransactionDTO --> "TimeStamp" DateTime
+@enduml

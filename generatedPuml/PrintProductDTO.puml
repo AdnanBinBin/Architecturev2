@@ -1,0 +1,9 @@
+@startuml
+class PrintProductDTO {
+    + IdCard : int <<get>> <<set>>
+    + ProductCode : string <<get>> <<set>>
+    + Quantity : int <<get>> <<set>>
+    + PrintProductDTO(idCard:int, productCode:string, quantity:int)
+    + PrintProductDTO()
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class CardDTO {
+    + IdCard : int <<get>> <<set>>
+    + IsEnabled : bool <<get>> <<set>>
+    + IdUser : int <<get>> <<set>>
+    + CardDTO(uid:int, enabled:bool)
+    + CardDTO(idCard:int, uid:int, enabled:bool)
+    + CardDTO()
+}
+@enduml

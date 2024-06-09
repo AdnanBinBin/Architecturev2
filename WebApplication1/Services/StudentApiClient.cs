@@ -13,13 +13,13 @@ using WebApplication1.Services;
 namespace WebAPINormal.Controllers
 {
 
-    public class StudentService : IStudentService
+    public class StudentApiClient : IStudentApiClient
     {
         private readonly HttpClient _httpClient;
         private readonly string _accountBaseUrl;
         private readonly string _paymentBaseUrl;
 
-        public StudentService(HttpClient httpClient, IConfiguration configuration)
+        public StudentApiClient(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _paymentBaseUrl = configuration["WebAPI:PaymentURL"];

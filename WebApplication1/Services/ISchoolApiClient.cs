@@ -4,7 +4,7 @@ using WebAPINormal.DTO;
 
 namespace WebApplication1.Services
 {
-    public interface ISchoolService
+    public interface ISchoolApiClient
     {
         Task CreateAccount(AccountCreationDTO accountData);
         Task Deposit(DepositDTO deposit);

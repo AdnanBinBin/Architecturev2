@@ -1,0 +1,17 @@
+@startuml
+class StudentApiClient {
+    - <<readonly>> _accountBaseUrl : string
+    - <<readonly>> _paymentBaseUrl : string
+    + StudentApiClient(httpClient:HttpClient, configuration:IConfiguration)
+    + <<async>> GetBudgetByIdUser(idUser:int) : Task<BudgetDTO?>
+    + <<async>> GetTransactionsByIdUser(idUser:int) : Task<List<TransactionDTO?>>
+    + <<async>> Print(print:PrintProductDTO) : Task
+    + <<async>> BuyExternalProduct(externalProduct:ExternalProductDTO) : Task
+    + <<async>> GetUserByIdCard(idCard:int) : Task<UserDTO>
+    + <<async>> Deposit(deposit:DepositDTO) : Task
+    + <<async>> ProductRateList() : Task<List<ProductRateDTO>>
+    + <<async>> ProductRateByCode(code:string) : Task<ProductRateDTO>
+}
+IStudentApiClient <|-- StudentApiClient
+StudentApiClient --> "_httpClient" HttpClient
+@enduml

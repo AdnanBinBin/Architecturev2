@@ -3,7 +3,7 @@ using WebAPINormal.DTO;
 
 namespace WebApplication1.Services
 {
-    public interface IStudentService
+    public interface IStudentApiClient
     {
 
         Task Print(PrintProductDTO print);

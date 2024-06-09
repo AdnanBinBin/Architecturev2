@@ -1,0 +1,9 @@
+@startuml
+class AccountCreationDTO {
+    + FirstName : string <<get>> <<set>>
+    + LastName : string <<get>> <<set>>
+    + Balance : decimal <<get>> <<set>>
+    + AccountCreationDTO(firstName:string, lastName:string, balance:decimal)
+    + AccountCreationDTO()
+}
+@enduml

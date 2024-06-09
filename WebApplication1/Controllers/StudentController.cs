@@ -8,9 +8,9 @@ namespace WebApplication1.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly IStudentService _studentService;
+        private readonly IStudentApiClient _studentService;
 
-        public StudentController(IStudentService studentService)
+        public StudentController(IStudentApiClient studentService)
         {
             _studentService = studentService;
         }

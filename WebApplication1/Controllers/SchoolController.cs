@@ -10,9 +10,9 @@ namespace WebApplication1.Controllers
     public class SchoolController : Controller
     {
 
-        private readonly ISchoolService _schoolService;
+        private readonly ISchoolApiClient _schoolService;
 
-        public SchoolController(ISchoolService schoolService)
+        public SchoolController(ISchoolApiClient schoolService)
         {
             _schoolService = schoolService;
         }

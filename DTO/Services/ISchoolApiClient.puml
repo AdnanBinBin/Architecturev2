@@ -1,0 +1,13 @@
+@startuml
+interface ISchoolApiClient {
+    CreateAccount(accountData:AccountCreationDTO) : Task
+    Deposit(deposit:DepositDTO) : Task
+    GetAllUsers() : Task<List<UserDTO?>>
+    GetBudgetByIdUser(idUser:int) : Task<BudgetDTO>
+    GetTransactionsByIdUser(idUser:int) : Task<List<TransactionDTO?>>
+    UpdateCardStatus(card:CardUpdateDTO) : Task
+    GetCardByIdUser(idUser:int) : Task <CardDTO>
+    DepositAll(amount:decimal) : Task
+    RemoveAccount(idUser:int) : Task
+}
+@enduml

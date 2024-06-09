@@ -1,0 +1,17 @@
+@startuml
+!include .\\Program.puml
+!include .\\Controllers\HomeController.puml
+!include .\\Controllers\SchoolController.puml
+!include .\\Controllers\StudentController.puml
+!include .\\Models\ErrorViewModel.puml
+!include .\\Models\StudentInfoViewModel.puml
+!include .\\Models\StudentInfoViewModelAdmin.puml
+!include .\\Services\ISchoolApiClient.puml
+!include .\\Services\IStudentApiClient.puml
+!include .\\Services\SchoolApiClient.puml
+!include .\\Services\StudentApiClient.puml
+!include .\\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.puml
+!include .\\obj\Debug\net8.0\WebApplication1.AssemblyInfo.puml
+!include .\\obj\Debug\net8.0\WebApplication1.GlobalUsings.g.puml
+!include .\\obj\Debug\net8.0\WebApplication1.RazorAssemblyInfo.puml
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class CardUpdateDTO {
+    + IdUser : int <<get>> <<set>>
+    + IsEnabled : bool <<get>> <<set>>
+    + CardUpdateDTO(idUser:int, IsEnabled:bool)
+    + CardUpdateDTO()
+}
+@enduml
