@@ -6,49 +6,73 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Imprimer un produit</title>
-    </head>
-    <body>
-        <div class="container">
-
-            <h1 class="text-center my-4">Print a product</h1>
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-md-12 col-xl-4">
-
-                    <div class="card" style="border-radius: 15px;">
-                        <div class="card-body text-center">
-  @if (TempData["ErrorMessage"] != null)
-    {
-        <p style="color: red;">@TempData["ErrorMessage"]</p>
-    }
-                            <form asp-controller="Student" asp-action="SubmitPrint" method="post">
-                                <div class="layoutDiv">
-                                    <label class="form-label" for="product">Select a product :</label>
-                                    <select class="form-select" id="product" name="productCode">
-                                        @foreach (var product in Model)
-                                        {
-                                            <option value="@product.ProductCode">@product.ProductName</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="layoutDiv">
-                                    <label class="form-label" for="quantity">Quantity :</label>
-                                    <input class="form-control" type="number" id="quantity" name="quantity">
-                                </div>
-                                <button class="btn btn-primary" type="submit">Print</button>
-                                <button class="btn btn-secondary" type="button" onclick="goBack()">Go Back</button>
-
-                            </form>
-                            <br>
-                        </div>
+<head>
+    <title>Imprimer un produit</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Print a product</h1>
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-4">
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body text-center">
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <p style="color: red;">@TempData["ErrorMessage"]</p>
+                        }
+                        <form asp-controller="Student" asp-action="SubmitPrint" method="post">
+                            <div class="layoutDiv">
+                                <label class="form-label" for="product">Select a product :</label>
+                                <select class="form-select" id="product" name="productCode" onchange="calculateTotal()">
+                                    @foreach (var product in Model)
+                                    {
+                                        <option value="@product.ProductCode" data-price="@product.Price">@product.ProductName - CHF @product.Price</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="layoutDiv">
+                                <label class="form-label" for="quantity">Quantity :</label>
+                                <input class="form-control" type="number" id="quantity" name="quantity" value="1" min="1" oninput="calculateTotal()">
+                            </div>
+                            <div class="layoutDiv">
+                                <label class="form-label" for="total">Total Cost :</label>
+                                <input class="form-control" type="text" id="total" name="total" readonly>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Print</button>
+                            <button class="btn btn-secondary" type="button" onclick="goBack()">Go Back</button>
+                        </form>
+                        <br>
                     </div>
+                </div>
             </div>
         </div>
-        <script>
-            function goBack() {
-                window.location.href = '@Url.Action("GetStudentInfo", "Student")';
+    </div>
+    <script>
+        function calculateTotal() {
+            var productSelect = document.getElementById("product");
+            var quantityInput = document.getElementById("quantity");
+            var totalInput = document.getElementById("total");
+
+            var selectedOption = productSelect.options[productSelect.selectedIndex];
+            var price = parseFloat(selectedOption.getAttribute("data-price"));
+            var quantity = parseInt(quantityInput.value);
+
+            var total = price * quantity;
+            if (isNaN(total) || total < 0) {
+                total = 0;
             }
-        </script>
-    </body>
+            totalInput.value = "CHF " + total.toFixed(2);
+        }
+
+        function goBack() {
+            window.location.href = '@Url.Action("GetStudentInfo", "Student")';
+        }
+
+        // Initialize the total cost when the page loads
+        window.onload = function () {
+            document.getElementById("product").selectedIndex = 0; // Select the first product by default
+            calculateTotal();
+        };
+    </script>
+</body>
 </html>
