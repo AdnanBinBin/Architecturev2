@@ -38,7 +38,7 @@
                                         <label class="form-label" for="IsEnabledNo">No</label><br>
                                     </div>
                                     <button class="btn btn-primary" type="submit">Update Card</button>
-                                    <button class="btn btn-primary" type="submit">Go Back</button>
+                                    <button class="btn btn-secondary" type="button" onclick="goBack()">Go Back</button>
         
                                 </form>
 
@@ -51,5 +51,10 @@
                     </div>
                 </div>
             </div>
+    <script>
+        function goBack() {
+            window.location.href = '@Url.Action("IndexSchool", "School")';
+        }
+    </script>
     </body>
 </html>

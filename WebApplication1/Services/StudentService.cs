@@ -111,11 +111,11 @@ namespace WebAPINormal.Controllers
                 if (response != null)
                 {
                     var responseBody = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Une erreur s'est produite lors du dépôt : {responseBody}", ex);
+                    throw new Exception($"An error occured during the deposit : {responseBody}", ex);
                 }
                 else
                 {
-                    throw new Exception("Une erreur s'est produite lors du dépôt et la réponse était nulle.", ex);
+                    throw new Exception("An error occured during the deposit", ex);
                 }
             }
         }

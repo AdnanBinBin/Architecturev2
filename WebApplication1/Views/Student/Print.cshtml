@@ -37,7 +37,7 @@
                                     <input class="form-control" type="number" id="quantity" name="quantity">
                                 </div>
                                 <button class="btn btn-primary" type="submit">Print</button>
-                                <button class="btn btn-primary" type="submit">Go Back</button>
+                                <button class="btn btn-secondary" type="button" onclick="goBack()">Go Back</button>
 
                             </form>
                             <br>
@@ -45,5 +45,10 @@
                     </div>
             </div>
         </div>
+        <script>
+            function goBack() {
+                window.location.href = '@Url.Action("GetStudentInfo", "Student")';
+            }
+        </script>
     </body>
 </html>

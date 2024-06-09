@@ -27,7 +27,7 @@
                                     </div>
                                     <div class="layoutDiv">
                                         <button class="btn btn-primary" type="submit">Deposit</button>
-                                        <button class="btn btn-primary" type="submit">Go Back</button>
+                                        <button class="btn btn-secondary" type="button" onclick="goBack()">Go Back</button>
 
                                     </div>
                                 </form>
@@ -36,5 +36,10 @@
                     </div>
                 </div>
         </div>
+    <script>
+        function goBack() {
+            window.location.href = '@Url.Action("GetStudentInfo", "Student")';
+        }
+    </script>
     </body>
 </html>

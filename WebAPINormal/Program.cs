@@ -1,6 +1,8 @@
 using DAL;
+using DAL.DB.Model;
 using DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using WebAPINormal.Manager;
 using WebAPINormal.Services;
@@ -38,8 +40,14 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    seed(services);
+}
+
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+/*if (app.Environment.IsDevelopment())
 {
     // Enable middleware to serve generated Swagger as a JSON endpoint.
     app.UseSwagger();
@@ -50,10 +58,17 @@ if (app.Environment.IsDevelopment())
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "PrintAPIV1");
     });
-}
+}*/
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+void seed(IServiceProvider serviceProvider)
+{ 
+    using var context = new PrintContext(serviceProvider.GetRequiredService<DbContextOptions<DbContext>>());
+    var created = context.Database.EnsureCreated();
+}

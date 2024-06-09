@@ -31,8 +31,7 @@
                                 <input class="form-control" type="number" id="Amount" name="Amount" required step="0.01" min="0">
                             </div>
                             <button class="btn btn-primary" type="submit">Deposit</button>
-                            <button class="btn btn-primary" type="submit">Go Back</button>
-
+                            <button class="btn btn-secondary" type="button" onclick="goBack()">Go Back</button>
                         </form>
 
                         @if (ViewBag.ErrorMessage != null)
@@ -43,5 +42,10 @@
                 </div>
             </div>
         </div>
+        <script>
+            function goBack() {
+                window.location.href = '@Url.Action("IndexSchool", "School")'; 
+            }
+        </script>
     </body>
 </html>

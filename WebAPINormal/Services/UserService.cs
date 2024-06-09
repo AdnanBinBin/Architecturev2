@@ -15,7 +15,7 @@ namespace WebAPINormal.Services
 
         public void CreateUser(string firstName, string lastName)
         {
-            string username = lastName.Substring(0, 2) + firstName.Substring(0, 2);
+            string username = lastName + '.' + firstName;
             var newUser = new UserDTO(username, firstName, lastName);
             _userRepository.Add(newUser);
         }
